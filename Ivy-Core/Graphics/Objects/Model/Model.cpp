@@ -57,13 +57,13 @@ bool Ivy::Graphics::Model::Load(std::string filePath) {
             else
                 vertex.m_Position = glm::vec3();
             
-            // Iterate through the colors.
-            for (unsigned int numColorChannels = 0; numColorChannels < mesh->GetNumColorChannels(); 
-                numColorChannels++) {
-                    aiColor4D color = mesh->mColors[numColorChannels][vertID];
-                    vertex.m_Color[numColorChannels] = glm::vec4(color.r, color.g, color.b, color.a);
+            if (mesh->HasVertexColors(0)) {
+                aiColor4D color0 = mesh->mColors[0][vertID];
+                vertex.m_Color[0] = glm::vec4(color0.r, color0.g, color0.b, color0.a);
             }
-
+            else
+                vertex.m_Color[0] = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+            
             // Iterate through the various texture coords.
             for (unsigned int numUVChannels = 0; numUVChannels < mesh->GetNumUVChannels();
                 numUVChannels++) {

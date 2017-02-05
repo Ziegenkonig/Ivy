@@ -151,7 +151,7 @@ bool Ivy::Graphics::Renderer::Create(EGLNativeWindowType window, EGLNativeDispla
     // Set the GLES context attributes.
     std::vector<EGLint> contextAttributes;
     contextAttributes.push_back(EGL_CONTEXT_MAJOR_VERSION);
-    contextAttributes.push_back(2);
+    contextAttributes.push_back(3);
     contextAttributes.push_back(EGL_CONTEXT_MINOR_VERSION);
     contextAttributes.push_back(0);
     contextAttributes.push_back(EGL_CONTEXT_OPENGL_DEBUG);

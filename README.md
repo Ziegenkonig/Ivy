@@ -3,7 +3,8 @@
 # Dependencies 
 * ANGLE
 * Assimp
+* FreeImage
+* FreeType
 * GLM
 * Miniz
-* STB
-* Nuklear
+* PortAudio

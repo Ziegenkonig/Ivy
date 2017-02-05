@@ -38,6 +38,7 @@
     <ClInclude Include="Graphics\Objects\Sprite\Sprite.h" />
     <ClInclude Include="Graphics\Objects\Model\Mesh.h" />
     <ClInclude Include="Graphics\Shaders\ShaderProgram.h" />
+    <ClInclude Include="Graphics\Light\Light.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
@@ -64,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />
-    <Text Include="frag.txt" />
+    <Text Include="fragNoTextures.txt" />
+    <Text Include="fragWithTextures.txt" />
   </ItemGroup>
 </Project>

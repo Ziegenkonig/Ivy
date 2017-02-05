@@ -14,25 +14,27 @@ int main(int argc, char** argv)
         renderer.Create(window.GetPlatformWindow(), window.GetPlatformDisplay());
         renderer.SetCullMode(GL_BACK);
 
-        ShaderProgram program("vert.txt", "frag.txt");
-        program.Create();
+        //ShaderProgram program("vert.txt", "fragNoTextures.txt");
+        //program.Create();
+        ShaderProgram programTextured("vert.txt", "fragWithTextures.txt");
+        programTextured.Create();
 
-        Camera camera(&program, glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f), 
+        Camera camera(&programTextured, glm::vec3(0.0f, 2.0f, -20.0f), glm::vec3(0.0f, 2.0f, 0.0f), 
             glm::radians(45.0f), 1080, 720, 0.1f, 1000.0f);
         camera.Create();
 
-        Model model(&program);
-        model.Load("monocube.dae");
+        //Model model(&program);
+        //model.Load("cube.ply");
 
-        Model model2(&program);
+        Model model2(&programTextured);
         model2.Load("monocube.dae");
         model2.SetPosition(glm::vec3(0.0f, 5.0f, 0.0f));
 
-        Model model3(&program);
+        Model model3(&programTextured);
         model3.Load("monocube.dae");
         model3.SetPosition(glm::vec3(5.0f, 0.0f, 0.0f));
 
-        Model model4(&program);
+        Model model4(&programTextured);
         model4.Load("monocube.dae");
         model4.SetPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
 
@@ -40,13 +42,12 @@ int main(int argc, char** argv)
         {
             renderer.Clear(Colors::CornflowerBlue);
             
-            model.Draw();
-            model.SetRotation(glm::vec3(0.0f, 0.0005f, 0.0f));
+            //model.Draw();
+            //model.SetRotation(glm::vec3(0.0f, 0.0005f, 0.0f));
 
             model2.Draw();
             model3.Draw();
             model4.Draw();
-
 
             model2.SetRotation(glm::vec3(1.0f, 1.0f, 0.0f));
             model3.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));
