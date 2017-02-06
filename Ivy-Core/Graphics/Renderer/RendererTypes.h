@@ -1,0 +1,4 @@
+#ifndef IVY_RENDERERTYPES_H
+#define IVY_RENDERERTYPES_H
+
+#endif

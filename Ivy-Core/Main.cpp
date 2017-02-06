@@ -14,12 +14,12 @@ int main(int argc, char** argv)
         renderer.Create(window.GetPlatformWindow(), window.GetPlatformDisplay());
         renderer.SetCullMode(GL_BACK);
 
-        //ShaderProgram program("vert.txt", "fragNoTextures.txt");
-        //program.Create();
+        ShaderProgram program("vert.txt", "fragNoTextures.txt");
+        program.Create();
         ShaderProgram programTextured("vert.txt", "fragWithTextures.txt");
         programTextured.Create();
 
-        Camera camera(&programTextured, glm::vec3(0.0f, 2.0f, -20.0f), glm::vec3(0.0f, 2.0f, 0.0f), 
+        Camera camera(&programTextured, glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f), 
             glm::radians(45.0f), 1080, 720, 0.1f, 1000.0f);
         camera.Create();
 
@@ -53,7 +53,8 @@ int main(int argc, char** argv)
             model3.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));
             model4.SetRotation(glm::vec3(0.0f, 0.0f, 1.0f));
 
-            renderer.SwapBuffers();
+            //renderer.SwapBuffers();
+            renderer.Present(window.GetPlatformDisplay());
             window.PollWindowEvents();
         }
     }

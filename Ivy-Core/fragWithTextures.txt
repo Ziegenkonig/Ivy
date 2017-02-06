@@ -1,4 +1,4 @@
-#version 300 es
+#version 150
 
 in mediump vec4 frag_Color0;
 in mediump vec2 frag_TexCoord0;
