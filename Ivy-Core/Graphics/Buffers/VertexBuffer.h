@@ -25,13 +25,13 @@ SOFTWARE.
 #ifndef IVY_VERTEXBUFFER_H
 #define IVY_VERTEXBUFFER_H
 
-#include "IBuffer.h"
+#include "IDrawableBuffer.h"
 #include "../Renderer.h"
 #include "Vertex.h"
 
 namespace Ivy {
     namespace Graphics {
-        class IVY_API VertexBuffer : public IBuffer<Vertex> {
+        class IVY_API VertexBuffer : public IDrawableBuffer<Vertex> {
         public:
             void Bind(void) override;
             void Create(void) override;

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef IVY_IBUFFER_H   
-#define IVY_IBUFFER_H
+#ifndef IVY_IDRAWABLEBUFFER_H   
+#define IVY_IDRAWABLEBUFFER_H
 
 #include <vector>
 
@@ -32,7 +32,7 @@ SOFTWARE.
 namespace Ivy {
     namespace Graphics {
         template<typename T>
-        struct IVY_API IBuffer {
+        struct IVY_API IDrawableBuffer {
             virtual void Bind(void) = 0;
             virtual void Create(void) = 0;
             virtual void Destroy(void) = 0;
@@ -43,4 +43,4 @@ namespace Ivy {
     }
 }
 
-#endif // IVY_IBUFFER_H
+#endif // IVY_IDRAWABLEBUFFER_H

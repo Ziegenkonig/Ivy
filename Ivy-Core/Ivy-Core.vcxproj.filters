@@ -12,7 +12,6 @@
     <ClInclude Include="Graphics\Textures\CubeMap.h" />
     <ClInclude Include="Graphics\Textures\Texture2D.h" />
     <ClInclude Include="Graphics\Buffers\FrameBuffer.h" />
-    <ClInclude Include="Graphics\Buffers\IBuffer.h" />
     <ClInclude Include="Graphics\Objects\Skybox\Skybox.h" />
     <ClInclude Include="Graphics\Objects\IObject.h" />
     <ClInclude Include="Graphics\UI\UIManager.h" />
@@ -39,6 +38,7 @@
     <ClInclude Include="Graphics\Objects\Model\Mesh.h" />
     <ClInclude Include="Graphics\Shaders\ShaderProgram.h" />
     <ClInclude Include="Graphics\Light\Light.h" />
+    <ClInclude Include="Graphics\Buffers\IDrawableBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />

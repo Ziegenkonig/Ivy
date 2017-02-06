@@ -50,8 +50,10 @@ void Ivy::Graphics::VertexBuffer::Bind(void) {
 }
 
 void Ivy::Graphics::VertexBuffer::Create(void) {
-    glGenVertexArraysOES(1, &m_VertexArray);
-    glBindVertexArrayOES(m_VertexArray);
+    glGenVertexArrays(1, &m_VertexArray);
+    glBindVertexArray(m_VertexArray);
+    //glGenVertexArraysOES(1, &m_VertexArray);
+    //glBindVertexArrayOES(m_VertexArray);
 
     glGenBuffers(1, &m_VertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
@@ -60,7 +62,8 @@ void Ivy::Graphics::VertexBuffer::Create(void) {
 
 void Ivy::Graphics::VertexBuffer::Destroy(void) {
     glDeleteBuffers(1, &m_VertexBuffer);
-    glDeleteVertexArraysOES(1, &m_VertexArray);
+    //glDeleteVertexArraysOES(1, &m_VertexArray);
+    glDeleteVertexArrays(1, &m_VertexArray);
 }
 
 void Ivy::Graphics::VertexBuffer::Draw(void) {

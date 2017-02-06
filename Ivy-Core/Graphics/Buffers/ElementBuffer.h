@@ -25,12 +25,12 @@ SOFTWARE.
 #ifndef IVY_INDEXBUFFER_H
 #define IVY_INDEXBUFFER_H
 
-#include "IBuffer.h"
+#include "IDrawableBuffer.h"
 #include "../Renderer.h"
 
 namespace Ivy {
     namespace Graphics {
-        class IVY_API ElementBuffer : public IBuffer<GLushort> {
+        class IVY_API ElementBuffer : public IDrawableBuffer<GLushort> {
         public:
             void Bind(void);
             void Create(void);

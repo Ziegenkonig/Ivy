@@ -25,9 +25,7 @@ SOFTWARE.
 #ifndef IVY_VERTEX_H
 #define IVY_VERTEX_H
 
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
+#include <glm/glm.hpp>
 
 #include "../Renderer.h"
 
