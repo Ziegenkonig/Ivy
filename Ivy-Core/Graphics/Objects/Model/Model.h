@@ -39,6 +39,7 @@ namespace Ivy {
 
             bool Load(std::string filePath);
             void Draw(void);
+            void SendToRenderer(Renderer* renderer);
 
             glm::vec3 GetPosition(void) { return m_Position; }
             glm::vec3 GetRotation(void) { return m_Rotation; }
@@ -47,6 +48,7 @@ namespace Ivy {
             void SetPosition(glm::vec3 position);
             void SetRotation(glm::vec3 rotation);
             void SetScale(glm::vec3 scale);
+
 
         private:
             ShaderProgram* m_Program;

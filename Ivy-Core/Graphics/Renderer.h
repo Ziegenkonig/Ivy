@@ -25,97 +25,6 @@ SOFTWARE.
 #ifndef IVY_RENDERER_H
 #define IVY_RENDERER_H
 
-#ifdef test
-#include <assert.h>
-#include <vector>
-#include <iostream>
-
-#ifndef GL_GLEXT_PROTOTYPES
-#define GL_GLEXT_PROTOTYPES 1
-#endif 
-
-#include <glm/glm.hpp>
-
-#include <export.h>
-#include <EGL/egl.h>
-#include <EGL/eglext.h>
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#include <GLES3/gl3.h>
-
-#include "../Symbols.h"
-
-namespace Ivy {
-    namespace Graphics {
-        class IVY_API Renderer {
-        public:
-            Renderer(EGLint redBits, EGLint greenBits, EGLint blueBits, EGLint alphaBits, EGLint depthBits, EGLint stencilBits,
-                EGLint swapIntervalbool, bool enableMultisampling, bool enableDebug, bool disableErrors);
-            ~Renderer();
-
-            void AdjustViewport(unsigned int width, unsigned int height);
-            void Clear(glm::vec3 color);
-            bool Create(EGLNativeWindowType window, EGLNativeDisplayType display);
-            void Destroy(void);
-            bool IsInitialized(void);
-            void SetCullMode(GLenum cullMode);
-            void SetFrontFace(GLenum frontFace);
-            void SwapBuffers(void);
-
-            EGLint GetRenderer(void) { return m_Renderer; }
-            EGLint GetRendererType(void) { return m_RendererType; }
-            EGLint GetVersionMajor(void) { return m_RendererVersionMajor; }
-            EGLint GetVersionMinor(void) { return m_RendererVersionMinor; }
-
-            EGLint GetRedBits(void) { return m_RedBits; }
-            void SetRedBits(EGLint bits) { m_RedBits = bits; }
-            EGLint GetGreenBits(void) { return m_GreenBits; }
-            void SetGreenBits(EGLint bits) { m_GreenBits = bits; }
-            EGLint GetBlueBits(void) { return m_BlueBits; }
-            void SetBlueBits(EGLint bits) { m_BlueBits = bits; }
-            EGLint GetAlphaBits(void) { return m_AlphaBits; }
-            void SetAlphaBits(EGLint bits) { m_AlphaBits = bits; }
-            EGLint GetDepthBits(void) { return m_DepthBits; }
-            void SetDepthBits(EGLint bits) { m_DepthBits = bits; }
-            EGLint GetStencilBits(void) { return m_StencilBits; }
-            void SetStencilBits(EGLint bits) { m_StencilBits = bits; }
-            EGLint GetSwapInverval(void) { return m_SwapInterval; }
-            void SetSwapInterval(EGLint interval);
-
-            EGLConfig GetEGLConfig(void) { return m_Config; }
-            EGLDisplay GetEGLDisplay(void) { return m_Display; }
-            EGLSurface GetEGLSurface(void) { return m_Surface; }
-            EGLContext GetEGLContext(void) { return m_Context; }
-
-        private:
-
-            EGLint m_Renderer = EGL_PLATFORM_ANGLE_TYPE_DEFAULT_ANGLE;
-            EGLint m_RendererType = EGL_DONT_CARE;
-            EGLint m_RendererVersionMajor = EGL_DONT_CARE;
-            EGLint m_RendererVersionMinor = EGL_DONT_CARE;
-            EGLint m_RendererPresentPath = EGL_DONT_CARE;
-
-            EGLint m_RedBits;
-            EGLint m_GreenBits;
-            EGLint m_BlueBits;
-            EGLint m_AlphaBits;
-            EGLint m_DepthBits;
-            EGLint m_StencilBits;
-            EGLint m_SwapInterval;
-            bool m_MultisamplingEnabled;
-            bool m_DebugEnabled;
-            bool m_DisableErrors;
-
-            EGLConfig m_Config;
-            EGLDisplay m_Display;
-            EGLSurface m_Surface;
-            EGLContext m_Context;
-        };
-    }
-}
-
-#else
-
 #include <assert.h>
 #include <vector>
 #include <iostream>
@@ -197,6 +106,5 @@ namespace Ivy {
         };
     }
 }
-#endif
 
 #endif // IVY_RENDERER_H

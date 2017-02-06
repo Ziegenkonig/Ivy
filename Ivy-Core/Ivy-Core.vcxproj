@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\ANGLE\include\;$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_STATIC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
@@ -84,15 +84,14 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <Link>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\ANGLE\lib\;$(SolutionDir)Dependencies\assimp\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\FreeImage\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\GLEW\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\FreeImage\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\GLEW\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>xcopy /f /s /y "$(SolutionDir)Dependencies\ANGLE\bin" "$(OutputPath)"
-xcopy /f /s /y "$(SolutionDir)Dependencies\FreeImage\bin\$(PlatformTarget)" "$(OutputPath)"
+      <Command>xcopy /f /s /y "$(SolutionDir)Dependencies\FreeImage\bin\$(PlatformTarget)" "$(OutputPath)"
 xcopy /f /s /y "$(ProjectDir)vert.txt" "$(OutputPath)"
 xcopy /f /s /y "$(ProjectDir)fragNoTextures.txt" "$(OutputPath)"
 xcopy /f /s /y "$(ProjectDir)fragWithTextures.txt" "$(OutputPath)"

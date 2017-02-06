@@ -14,6 +14,7 @@ int main(int argc, char** argv)
         renderer.Create(window.GetPlatformWindow(), window.GetPlatformDisplay());
         renderer.SetCullMode(GL_BACK);
 
+        /*
         ShaderProgram program("vert.txt", "fragNoTextures.txt");
         program.Create();
         ShaderProgram programTextured("vert.txt", "fragWithTextures.txt");
@@ -37,6 +38,7 @@ int main(int argc, char** argv)
         Model model4(&programTextured);
         model4.Load("monocube.dae");
         model4.SetPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
+        */
 
         while (window.open)
         {
@@ -45,6 +47,7 @@ int main(int argc, char** argv)
             //model.Draw();
             //model.SetRotation(glm::vec3(0.0f, 0.0005f, 0.0f));
 
+            /*
             model2.Draw();
             model3.Draw();
             model4.Draw();
@@ -52,6 +55,7 @@ int main(int argc, char** argv)
             model2.SetRotation(glm::vec3(1.0f, 1.0f, 0.0f));
             model3.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));
             model4.SetRotation(glm::vec3(0.0f, 0.0f, 1.0f));
+            */
 
             //renderer.SwapBuffers();
             renderer.Present(window.GetPlatformDisplay());
