@@ -121,14 +121,13 @@ bool Ivy::Graphics::Renderer::Create() {
     if (!SetPixelFormat(m_NativeDisplay, pixelFormat, &dummyPixelFormatDescriptor))
         return false;
 
-    const int contextAttribs[] = {
+    int contextAttribs[] = {
         WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
         WGL_CONTEXT_MINOR_VERSION_ARB, 3,
-        WGL_CONTEXT_DEBUG_BIT_ARB, m_DebugEnabled ? GL_TRUE : GL_FALSE,
-        WGL_CONTEXT_PROFILE_MASK_ARB, m_CompatibilityEnabled ? 
-        WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB : WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+        WGL_CONTEXT_FLAGS_ARB, m_DebugEnabled ? WGL_CONTEXT_DEBUG_BIT_ARB : GL_NONE,
+        WGL_CONTEXT_PROFILE_MASK_ARB, m_CompatibilityEnabled ? WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB : WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
         GL_NONE,
-    };
+    };  
 
     // Create the actual OpenGL context		
     m_NativeContext = wglCreateContextAttribsARB(m_NativeDisplay, nullptr, contextAttribs);

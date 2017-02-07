@@ -10,7 +10,7 @@ int main(int argc, char** argv)
     Window window(1080, 720, 100, 100, "Ivy", false);
     if (window.Create())
     {
-        Renderer renderer(window.GetPlatformWindow(), window.GetPlatformDisplay(), 32, 24, 8, 8, 1, true, true, false);
+        Renderer renderer(window.GetPlatformWindow(), window.GetPlatformDisplay(), 32, 24, 8, 1, 1, true, false, false);
         renderer.Create();
         renderer.SetCullMode(GL_BACK);
 
