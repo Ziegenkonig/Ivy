@@ -25,8 +25,6 @@ SOFTWARE.
 #ifndef IVY_RENDERER_H
 #define IVY_RENDERER_H
 
-#include <assert.h>
-#include <vector>
 #include <iostream>
 
 #define GLEW_STATIC
@@ -55,31 +53,25 @@ namespace Ivy {
     namespace Graphics {
         class Renderer {
         public:
-            Renderer(GLint redBits, GLint greenBits, GLint blueBits, GLint alphaBits, GLint depthBits, GLint stencilBits,
-                GLint swapIntervalbool, bool enableMultisampling, bool enableDebug, bool disableErrors);
+            Renderer(NativeWindow window, NativeDisplay display, GLint colorBits, GLint depthBits, GLint stencilBits, GLint numSamples,
+                GLint swapInterval, bool enableMultisampling, bool enableDebug, bool compatibilityContext);
             ~Renderer();
 
             void AdjustViewport(unsigned int width, unsigned int height);
             void Clear(glm::vec3 color);
-            bool Create(NativeWindow window, NativeDisplay display);
+            bool Create(void);
             void Destroy(void);
             bool IsInitialized(void);
             void SetCullMode(GLenum cullMode);
             void SetDrawMode(GLenum drawMode);
             void SetFrontFace(GLenum frontFace);
-            void Present(NativeDisplay display);
+            void Present(void);
 
             GLint GetVersionMajor(void) { return m_RendererVersionMajor; }
             GLint GetVersionMinor(void) { return m_RendererVersionMinor; }
 
-            GLint GetRedBits(void) { return m_RedBits; }
-            void SetRedBits(GLint bits) { m_RedBits = bits; }
-            GLint GetGreenBits(void) { return m_GreenBits; }
-            void SetGreenBits(GLint bits) { m_GreenBits = bits; }
-            GLint GetBlueBits(void) { return m_BlueBits; }
-            void SetBlueBits(GLint bits) { m_BlueBits = bits; }
-            GLint GetAlphaBits(void) { return m_AlphaBits; }
-            void SetAlphaBits(GLint bits) { m_AlphaBits = bits; }
+            GLint GetColorBits(void) { return m_ColorBits; }
+            void SetColorBits(GLint bits) { m_ColorBits = bits; }
             GLint GetDepthBits(void) { return m_DepthBits; }
             void SetDepthBits(GLint bits) { m_DepthBits = bits; }
             GLint GetStencilBits(void) { return m_StencilBits; }
@@ -89,20 +81,20 @@ namespace Ivy {
 
         private:
 
-            NativeContext m_Context;
+            NativeWindow m_NativeWindow;
+            NativeDisplay m_NativeDisplay;
+            NativeContext m_NativeContext;
             GLint m_RendererVersionMajor;
             GLint m_RendererVersionMinor;
 
-            GLint m_RedBits;
-            GLint m_GreenBits;
-            GLint m_BlueBits;
-            GLint m_AlphaBits;
+            GLint m_ColorBits;
             GLint m_DepthBits;
             GLint m_StencilBits;
             GLint m_SwapInterval;
+            GLint m_NumSamples;
             bool m_MultisamplingEnabled;
             bool m_DebugEnabled;
-            bool m_DisableErrors;
+            bool m_CompatibilityEnabled;
         };
     }
 }

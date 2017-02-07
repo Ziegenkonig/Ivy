@@ -10,11 +10,10 @@ int main(int argc, char** argv)
     Window window(1080, 720, 100, 100, "Ivy", false);
     if (window.Create())
     {
-        Renderer renderer(8, 8, 8, 8, 24, 8, 0, false, true, false);
-        renderer.Create(window.GetPlatformWindow(), window.GetPlatformDisplay());
+        Renderer renderer(window.GetPlatformWindow(), window.GetPlatformDisplay(), 32, 24, 8, 8, 1, true, true, false);
+        renderer.Create();
         renderer.SetCullMode(GL_BACK);
 
-        /*
         ShaderProgram program("vert.txt", "fragNoTextures.txt");
         program.Create();
         ShaderProgram programTextured("vert.txt", "fragWithTextures.txt");
@@ -38,7 +37,6 @@ int main(int argc, char** argv)
         Model model4(&programTextured);
         model4.Load("monocube.dae");
         model4.SetPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
-        */
 
         while (window.open)
         {
@@ -47,7 +45,6 @@ int main(int argc, char** argv)
             //model.Draw();
             //model.SetRotation(glm::vec3(0.0f, 0.0005f, 0.0f));
 
-            /*
             model2.Draw();
             model3.Draw();
             model4.Draw();
@@ -55,10 +52,9 @@ int main(int argc, char** argv)
             model2.SetRotation(glm::vec3(1.0f, 1.0f, 0.0f));
             model3.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));
             model4.SetRotation(glm::vec3(0.0f, 0.0f, 1.0f));
-            */
 
             //renderer.SwapBuffers();
-            renderer.Present(window.GetPlatformDisplay());
+            renderer.Present();
             window.PollWindowEvents();
         }
     }

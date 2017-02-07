@@ -39,8 +39,6 @@
     <ClInclude Include="Graphics\Shaders\ShaderProgram.h" />
     <ClInclude Include="Graphics\Light\Light.h" />
     <ClInclude Include="Graphics\Buffers\IDrawableBuffer.h" />
-    <ClInclude Include="Graphics\Renderer\RendererTypes.h" />
-    <ClInclude Include="Graphics\Renderer\GLRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
@@ -64,7 +62,6 @@
     <ClCompile Include="Graphics\Objects\Model\Model.cpp" />
     <ClCompile Include="Graphics\Objects\Model\Mesh.cpp" />
     <ClCompile Include="Graphics\Shaders\ShaderProgram.cpp" />
-    <ClCompile Include="Graphics\Renderer\GLRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />

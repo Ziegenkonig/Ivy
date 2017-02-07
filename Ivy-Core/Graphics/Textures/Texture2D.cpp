@@ -71,7 +71,8 @@ bool Ivy::Graphics::Texture2D::Create() {
     glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisotropy);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropy);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA_EXT, m_Width, m_Height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, m_Bitmap);
+    // FreeImage uses BGRA for its texture formatting.
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_BGRA, GL_UNSIGNED_BYTE, m_Bitmap);
     glGenerateMipmap(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
