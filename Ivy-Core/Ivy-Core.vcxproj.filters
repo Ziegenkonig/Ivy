@@ -31,7 +31,6 @@
     <ClInclude Include="Graphics\Textures\Atlas.h" />
     <ClInclude Include="Graphics\Objects\Sources\LightSource\LightSource.h" />
     <ClInclude Include="Graphics\Objects\Sources\AudioSource\AudioSource.h" />
-    <ClInclude Include="Graphics\DepthStencil.h" />
     <ClInclude Include="Graphics\Objects\Listener\AudioListener.h" />
     <ClInclude Include="Graphics\Objects\Model\Model.h" />
     <ClInclude Include="Graphics\Objects\Sprite\Sprite.h" />
@@ -39,6 +38,18 @@
     <ClInclude Include="Graphics\Shaders\ShaderProgram.h" />
     <ClInclude Include="Graphics\Light\Light.h" />
     <ClInclude Include="Graphics\Buffers\IDrawableBuffer.h" />
+    <ClInclude Include="Graphics\Renderer\IRenderer.h" />
+    <ClInclude Include="Graphics\Renderer\RendererFactory.h" />
+    <ClInclude Include="Graphics\Renderer\RendererTypes.h" />
+    <ClInclude Include="IO\Image.h" />
+    <ClInclude Include="Graphics\Renderer\DepthStencil.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DShaderProgram.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DVertexBuffer.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DIndexBuffer.h" />
+    <ClInclude Include="IO\Log.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DRenderer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\WGLRenderer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLXRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
@@ -58,10 +69,12 @@
     <ClCompile Include="Graphics\Objects\Cameras\CameraManager.cpp" />
     <ClCompile Include="Graphics\Objects\Cameras\PivotCamera.cpp" />
     <ClCompile Include="Graphics\Textures\Atlas.cpp" />
-    <ClCompile Include="Graphics\DepthStencil.cpp" />
     <ClCompile Include="Graphics\Objects\Model\Model.cpp" />
     <ClCompile Include="Graphics\Objects\Model\Mesh.cpp" />
     <ClCompile Include="Graphics\Shaders\ShaderProgram.cpp" />
+    <ClCompile Include="IO\Image.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DRenderer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\WGLRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />

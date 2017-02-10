@@ -2,7 +2,6 @@
 Collaborative C++ Game Engine written by students from the University of Memphis. 
 
 # Dependencies 
-* ANGLE
 * Assimp
 * FreeImage
 * FreeType
@@ -16,7 +15,7 @@ Collaborative C++ Game Engine written by students from the University of Memphis
 # Ivy Shader Reference
 ##Vertex Shader Inputs
 | Semantic | Type | Use |
-| --- |:---:| ---:|
+| --- | :---: | --- |
 | ivy_Position | vec3 | Position |
 | ivy_Color0 | vec4 | Color 1 |
 | ivy_Color1 | vec4 | Color 2 |
@@ -37,7 +36,7 @@ Collaborative C++ Game Engine written by students from the University of Memphis
 ##Vertex Shader Uniform Blocks
 ###ivy_MVP - 3D Transformations
 | Semantic | Type | Use |
-| --- |:---:| ---:|
+| ---| :---: | --- |
 | ivy_Model | mat4 | Model matrix |
 | ivy_View | mat4 | View matrix |
 | ivy_Projection | mat4 | Projection matrix |

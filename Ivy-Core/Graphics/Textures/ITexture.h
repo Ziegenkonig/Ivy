@@ -29,6 +29,20 @@ SOFTWARE.
 
 namespace Ivy {
     namespace Graphics {
+
+        enum class IVY_API WrapMode {
+            Repeat,
+            MirroredRepeat,
+            ClampToEdge,
+            ClampToBorder,
+            MirroredClampToEdge,
+        };
+
+        enum class IVY_API FilterMode {
+            Linear,
+            Nearest,
+        };
+
         struct IVY_API ITexture {
             virtual bool Create() = 0;
             virtual void MakeActive() = 0;
