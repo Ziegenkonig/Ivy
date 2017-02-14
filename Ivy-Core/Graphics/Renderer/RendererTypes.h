@@ -24,7 +24,7 @@ enum class RendererAPI {
     OpenGL,
 };
 
-enum class RendererType {
+enum class RendererPath {
     Deferred,
     Forward,
 };

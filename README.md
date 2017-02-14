@@ -1,16 +1,29 @@
 # Ivy
-Collaborative C++ Game Engine written by students from the University of Memphis. 
+An Open Source C++ Game Development Framework inspired by [Monogame](http://www.monogame.net/).
 
-# Dependencies 
+## Supported Graphics API's
+* Direct3D 11.0
+* OpenGL 4.3
+
+## Dependencies 
 * Assimp
 * FreeImage
 * FreeType
 * GLM
 * Miniz
-* PortAudio 
+* PortAudio
 
-# Getting Started
-**Windows** 
+## Features
+* Written for portability. 
+* Flexible and simple interface.
+* Direct3D and OpenGL backends.
+
+## Getting Started
+**Windows**
+
+## Planned Features
+* Multithreading
+* Deferred Rendering
 
 # Ivy Shader Reference
 ##Vertex Shader Inputs

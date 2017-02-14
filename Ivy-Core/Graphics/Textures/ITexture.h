@@ -43,6 +43,11 @@ namespace Ivy {
             Nearest,
         };
 
+        enum class IVY_API TextureType {
+            Texture2D,
+            CubeMap,
+        };
+
         struct IVY_API ITexture {
             virtual bool Create() = 0;
             virtual void MakeActive() = 0;

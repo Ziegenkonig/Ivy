@@ -50,6 +50,13 @@
     <ClInclude Include="Graphics\API\Direct3D\D3DRenderer.h" />
     <ClInclude Include="Graphics\API\OpenGL\WGLRenderer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLXRenderer.h" />
+    <ClInclude Include="Graphics\Shaders\IShaderProgram.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLShaderProgram.h" />
+    <ClInclude Include="Graphics\Shaders\ShaderProgramFactory.h" />
+    <ClInclude Include="Graphics\IDrawable.h" />
+    <ClInclude Include="Graphics\API\IVertexBuffer.h" />
+    <ClInclude Include="Graphics\API\IIndexBuffer.h" />
+    <ClInclude Include="Graphics\API\IConstantBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
@@ -75,6 +82,8 @@
     <ClCompile Include="IO\Image.cpp" />
     <ClCompile Include="Graphics\API\Direct3D\D3DRenderer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\WGLRenderer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLXRenderer.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />

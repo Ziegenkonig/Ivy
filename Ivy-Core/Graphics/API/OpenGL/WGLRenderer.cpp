@@ -1,9 +1,9 @@
 #include "WGLRenderer.h"
 
 Ivy::Graphics::WGLRenderer::WGLRenderer(NativeWindow window, NativeDisplay display,
-    RendererType type, int colorBits, int depthBits, int stencilBits,
+    RendererPath path, int colorBits, int depthBits, int stencilBits,
     int numSamples, int swapInterval, bool enableMultisampling, bool enableDebug) {
-    this->m_Type = type;
+    this->m_Path = path;
     this->m_NativeWindow = window;
     this->m_NativeDisplay = display;
     this->m_ColorBits = colorBits;
@@ -16,19 +16,7 @@ Ivy::Graphics::WGLRenderer::WGLRenderer(NativeWindow window, NativeDisplay displ
 }
 
 Ivy::Graphics::WGLRenderer::~WGLRenderer() {
-    WGLRenderer::Destroy();
-}
-
-RendererAPI Ivy::Graphics::WGLRenderer::GetRendererAPI(void) {
-    return RendererAPI::OpenGL;
-}
-
-int Ivy::Graphics::WGLRenderer::GetVersionMajor(void) { 
-    return m_RendererVersionMajor;
-}
-
-int Ivy::Graphics::WGLRenderer::GetVersionMinor(void) {
-    return m_RendererVersionMinor;
+    WGLRenderer::Startup();
 }
 
 void Ivy::Graphics::WGLRenderer::AdjustViewport(int width, int height) {
@@ -41,7 +29,65 @@ void Ivy::Graphics::WGLRenderer::Clear(glm::vec3 color) {
     glClearColor(color.r, color.g, color.b, 1.0f);
 }
 
-bool Ivy::Graphics::WGLRenderer::Create(void) {
+bool Ivy::Graphics::WGLRenderer::CreateShaderProgram(std::shared_ptr<IShaderProgram>* shaderProgram) {
+    return false;
+}
+
+bool Ivy::Graphics::WGLRenderer::CreateTexture(std::shared_ptr<ITexture>* texture, TextureType type) {
+    return false;
+}
+
+int Ivy::Graphics::WGLRenderer::GetBackBufferWidth()
+{
+    return 0;
+}
+
+int Ivy::Graphics::WGLRenderer::GetBackBufferHeight()
+{
+    return 0;
+}
+
+int Ivy::Graphics::WGLRenderer::GetColorBits()
+{
+    return 0;
+}
+
+int Ivy::Graphics::WGLRenderer::GetDepthBits()
+{
+    return 0;
+}
+
+int Ivy::Graphics::WGLRenderer::GetStencilBits()
+{
+    return 0;
+}
+
+RendererAPI Ivy::Graphics::WGLRenderer::GetRendererAPI(void) {
+    return RendererAPI::OpenGL;
+}
+
+RendererPath Ivy::Graphics::WGLRenderer::GetRendererPath(void)
+{
+    return RendererPath();
+}
+
+int Ivy::Graphics::WGLRenderer::GetVersionMajor(void) {
+    return m_RendererVersionMajor;
+}
+
+int Ivy::Graphics::WGLRenderer::GetVersionMinor(void) {
+    return m_RendererVersionMinor;
+}
+
+bool Ivy::Graphics::WGLRenderer::Initialized(void) {
+    return m_NativeContext != nullptr;
+}
+
+void Ivy::Graphics::WGLRenderer::Present(void) {
+    SwapBuffers(m_NativeDisplay);
+}
+
+bool Ivy::Graphics::WGLRenderer::Startup(void) {
     // Dummy Window for legacy OpenGL context.
     HWND dummyWND = CreateWindowA("STATIC", "", WS_DISABLED, 0, 0, 0, 0, nullptr, nullptr, GetModuleHandle(nullptr), nullptr);
     HDC dummyDC = GetDC(dummyWND);
@@ -153,19 +199,13 @@ bool Ivy::Graphics::WGLRenderer::Create(void) {
     glGetIntegerv(GL_VIEWPORT, viewportInfo);
     std::cout << "Resolution: " << viewportInfo[2] << "x" << viewportInfo[3] << std::endl;
 
+    std::cout << "WGLRenderer::Startup has been called." << std::endl;
     return true;
 }
 
-void Ivy::Graphics::WGLRenderer::Destroy(void) {
+void Ivy::Graphics::WGLRenderer::Shutdown(void) {
     wglMakeCurrent(m_NativeDisplay, nullptr);
     wglDeleteContext(m_NativeContext);
     ReleaseDC(m_NativeWindow, m_NativeDisplay);
-}
-
-bool Ivy::Graphics::WGLRenderer::IsInitialized(void) {
-    return m_NativeContext != nullptr;
-}
-
-void Ivy::Graphics::WGLRenderer::Present(void) {
-    SwapBuffers(m_NativeDisplay);
+    std::cout << "WGLRenderer::Shutdown has been has been called." << std::endl;
 }

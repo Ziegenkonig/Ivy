@@ -1,9 +1,10 @@
 #include "D3DRenderer.h"
+#include "D3DShaderProgram.h"
 
 Ivy::Graphics::D3DRenderer::D3DRenderer(NativeWindow window, NativeDisplay display, 
-    RendererType type, int colorBits, int depthBits, int stencilBits,
+    RendererPath path, int colorBits, int depthBits, int stencilBits,
     int numSamples, int swapInterval, bool enableMultisampling, bool enableDebug) {
-    this->m_Type = type;
+    this->m_Path = path;
     this->m_NativeWindow = window;
     this->m_NativeDisplay = display;
     this->m_ColorBits = colorBits;
@@ -16,12 +17,56 @@ Ivy::Graphics::D3DRenderer::D3DRenderer(NativeWindow window, NativeDisplay displ
 }
 
 Ivy::Graphics::D3DRenderer::~D3DRenderer() {
-    D3DRenderer::Destroy();
+    D3DRenderer::Shutdown();
+}
+
+void Ivy::Graphics::D3DRenderer::AdjustViewport(int width, int height) {
+}
+
+void Ivy::Graphics::D3DRenderer::Clear(glm::vec3 color) {
+    m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), &color[0]);
+}
+
+bool Ivy::Graphics::D3DRenderer::CreateShaderProgram(std::shared_ptr<IShaderProgram>* shaderProgram) {
+    return (*shaderProgram = std::make_shared<D3DShaderProgram>(this)) != nullptr;
+}
+
+bool Ivy::Graphics::D3DRenderer::CreateTexture(std::shared_ptr<ITexture>* texture, TextureType type) {
+    return false;
+}
+
+int Ivy::Graphics::D3DRenderer::GetBackBufferWidth()
+{
+    return 0;
+}
+
+int Ivy::Graphics::D3DRenderer::GetBackBufferHeight()
+{
+    return 0;
+}
+
+int Ivy::Graphics::D3DRenderer::GetColorBits()
+{
+    return 0;
+}
+
+int Ivy::Graphics::D3DRenderer::GetDepthBits()
+{
+    return 0;
+}
+
+int Ivy::Graphics::D3DRenderer::GetStencilBits()
+{
+    return 0;
 }
 
 RendererAPI Ivy::Graphics::D3DRenderer::GetRendererAPI(void)
 {
     return RendererAPI::Direct3D;
+}
+
+RendererPath Ivy::Graphics::D3DRenderer::GetRendererPath(void) {
+    return m_Path;
 }
 
 int Ivy::Graphics::D3DRenderer::GetVersionMajor(void) {
@@ -32,21 +77,22 @@ int Ivy::Graphics::D3DRenderer::GetVersionMinor(void) {
     return m_RendererVersionMinor;
 }
 
-void Ivy::Graphics::D3DRenderer::AdjustViewport(int width, int height) {
+bool Ivy::Graphics::D3DRenderer::Initialized(void) {
+    return m_pDevice != nullptr;
 }
 
-void Ivy::Graphics::D3DRenderer::Clear(glm::vec3 color) {
-    m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), &color[0]);
+void Ivy::Graphics::D3DRenderer::Present(void) {
+    if (m_DebugEnabled)
+        m_pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+    m_pSwapChain->Present(1, 0);
 }
 
-bool Ivy::Graphics::D3DRenderer::Create(void)
-{
+bool Ivy::Graphics::D3DRenderer::Startup(void) {
     HRESULT error;
-    
+
     int createDeviceFlags = 0;
 
-    // Add the debug device flag along with any other defined flags.
-    if(m_DebugEnabled)
+    if (m_DebugEnabled)
         createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 
     std::vector<D3D_DRIVER_TYPE> driverTypes = {
@@ -60,6 +106,8 @@ bool Ivy::Graphics::D3DRenderer::Create(void)
         D3D_FEATURE_LEVEL_10_1,
         D3D_FEATURE_LEVEL_10_0,
         D3D_FEATURE_LEVEL_9_3,
+        D3D_FEATURE_LEVEL_9_2,
+        D3D_FEATURE_LEVEL_9_1,
     };
 
     DXGI_SWAP_CHAIN_DESC swapDesc;
@@ -78,10 +126,11 @@ bool Ivy::Graphics::D3DRenderer::Create(void)
 
     // Iterate through the drivers.
     for (unsigned int i = 0; i < driverTypes.size(); i++) {
-        error = D3D11CreateDeviceAndSwapChain(nullptr, driverTypes[i], 
-            nullptr, createDeviceFlags, featureLevels.data(), featureLevels.size(), D3D11_SDK_VERSION, 
-            &swapDesc, m_pSwapChain.GetAddressOf(),m_pDevice.GetAddressOf(), &m_FeatureLevel, m_pImmediateContext.GetAddressOf());
-        
+        error = D3D11CreateDeviceAndSwapChain(nullptr, driverTypes[i],
+            nullptr, createDeviceFlags, featureLevels.data(), featureLevels.size(), D3D11_SDK_VERSION,
+            &swapDesc, m_pSwapChain.GetAddressOf(), m_pDevice.GetAddressOf(), &m_FeatureLevel,
+            m_pDeviceContext.GetAddressOf());
+
         if (SUCCEEDED(error)) {
             // Set the feature level.
             switch (m_FeatureLevel) {
@@ -106,12 +155,12 @@ bool Ivy::Graphics::D3DRenderer::Create(void)
     }
 
     ComPtr<ID3D11Texture2D> l_pBackBuffer;
-    m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(l_pBackBuffer.GetAddressOf()));
+    m_pSwapChain->GetBuffer(0, IID_ID3D11Texture2D, reinterpret_cast<void**>(l_pBackBuffer.GetAddressOf()));
     error = m_pDevice->CreateRenderTargetView(l_pBackBuffer.Get(), nullptr, m_pRenderTargetView.GetAddressOf());
     if (FAILED(error))
         return false;
 
-    m_pImmediateContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), nullptr);
+    m_pDeviceContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), nullptr);
 
     ZeroMemory(&m_Viewport, sizeof(D3D11_VIEWPORT));
     m_Viewport.MinDepth = 0.0f;
@@ -119,21 +168,28 @@ bool Ivy::Graphics::D3DRenderer::Create(void)
     m_Viewport.TopLeftX = 0;
     m_Viewport.TopLeftY = 0;
 
-    m_pImmediateContext->RSSetViewports(1, &m_Viewport);
+    m_pDeviceContext->RSSetViewports(1, &m_Viewport);
 
+    std::cout << "D3DRenderer::Startup | SUCCESS" << std::endl;
     return true;
 }
 
-void Ivy::Graphics::D3DRenderer::Destroy(void) {
-   
+void Ivy::Graphics::D3DRenderer::Shutdown(void) {
+    std::cout << "D3DRenderer::Shutdown | SUCCESS" << std::endl;
 }
 
-bool Ivy::Graphics::D3DRenderer::IsInitialized(void) {
-    return m_pDevice != nullptr;
+ComPtr<ID3D11Device>& Ivy::Graphics::D3DRenderer::GetID3D11Device() {
+    return m_pDevice;
 }
 
-void Ivy::Graphics::D3DRenderer::Present(void) {
-    if (m_DebugEnabled)
-        m_pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
-    m_pSwapChain->Present(1, 0);
+ComPtr<ID3D11DeviceContext>& Ivy::Graphics::D3DRenderer::GetID3D11DeviceContext() {
+    return m_pDeviceContext;
+}
+
+ComPtr<IDXGISwapChain>& Ivy::Graphics::D3DRenderer::GetIDXGISwapChain() {
+    return m_pSwapChain;
+}
+
+ComPtr<ID3D11RenderTargetView>& Ivy::Graphics::D3DRenderer::GetID3D11RenderTargetView() {
+    return m_pRenderTargetView;
 }

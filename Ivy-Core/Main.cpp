@@ -7,6 +7,7 @@
 #include "Graphics/Objects/Model/Model.h"
 #include "Graphics/Colors.h"
 #include "Graphics/Renderer/RendererFactory.h"
+#include "Graphics/Shaders/ShaderProgramFactory.h"
 #include "IO/Image.h"
 
 using namespace Ivy::Graphics;
@@ -16,10 +17,14 @@ int main(int argc, char** argv)
     Window window(1080, 720, 100, 100, "Ivy", false);
     if (window.Create())
     {
-        std::unique_ptr<IRenderer> renderer;
-        bool success = RendererFactory::GetRenderer(&renderer, window.GetPlatformWindow(), 
-            window.GetPlatformDisplay(), RendererType::Forward, 32, 24, 8, 1, 1, true, false);
+        std::shared_ptr<IRenderer> renderer;
+        if (!RendererFactory::GetRenderer(&renderer, window.GetPlatformWindow(),
+            window.GetPlatformDisplay(), RendererPath::Forward, 32, 24, 8, 1, 1, true, false))
+            return false;
 
+        std::shared_ptr<IShaderProgram> shaderProgram;
+        renderer->CreateShaderProgram(&shaderProgram);
+        int location = shaderProgram->GetBlockLocation(ShaderType::Vertex, "ivy_MVP");
 #if 0
         ShaderProgram program("vert.txt", "fragNoTextures.txt");
         program.Create();

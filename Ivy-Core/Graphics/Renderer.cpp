@@ -178,7 +178,7 @@ void Ivy::Graphics::Renderer::Destroy(void) {
 #endif
 }
 
-bool Ivy::Graphics::Renderer::IsInitialized(void) {
+bool Ivy::Graphics::Renderer::Initialized(void) {
     return m_NativeContext != nullptr;
 }
 

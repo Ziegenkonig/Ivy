@@ -61,7 +61,7 @@ namespace Ivy {
             void Clear(glm::vec3 color);
             bool Create(void);
             void Destroy(void);
-            bool IsInitialized(void);
+            bool Initialized(void);
             void SetCullMode(GLenum cullMode);
             void SetDrawMode(GLenum drawMode);
             void SetFrontFace(GLenum frontFace);

@@ -52,8 +52,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -84,7 +83,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <Link>
-      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\FreeImage\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\GLEW\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
@@ -106,7 +105,7 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\ANGLE\include\;$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_EXPORT_SYMBOLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
@@ -114,7 +113,7 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\ANGLE\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <Link>
-      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\FreeImage\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\GLEW\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -136,14 +135,14 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\ANGLE\include\;$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_EXPORT_SYMBOLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\FreeImage\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\GLEW\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -168,13 +167,13 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\ANGLE\include\;$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_EXPORT_SYMBOLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;FreeImage.lib;glew32s.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\FreeImage\lib\$(PlatformTarget)\;$(SolutionDir)Dependencies\GLEW\lib\$(PlatformTarget)\</AdditionalLibraryDirectories>
     </Link>
     <Lib>
@@ -197,7 +196,12 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClInclude Include="Graphics\API\Direct3D\D3DIndexBuffer.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DShaderProgram.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DVertexBuffer.h" />
+    <ClInclude Include="Graphics\API\IConstantBuffer.h" />
+    <ClInclude Include="Graphics\API\IIndexBuffer.h" />
+    <ClInclude Include="Graphics\API\IVertexBuffer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLShaderProgram.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\IDrawable.h" />
     <ClInclude Include="Graphics\Light\Light.h" />
     <ClInclude Include="Graphics\Objects\Listener\AudioListener.h" />
     <ClInclude Include="Graphics\Objects\Sources\AudioSource\AudioSource.h" />
@@ -221,6 +225,8 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClInclude Include="Graphics\Renderer\RendererFactory.h" />
     <ClInclude Include="Graphics\Renderer\RendererTypes.h" />
     <ClInclude Include="Graphics\API\OpenGL\WGLRenderer.h" />
+    <ClInclude Include="Graphics\Shaders\IShaderProgram.h" />
+    <ClInclude Include="Graphics\Shaders\ShaderProgramFactory.h" />
     <ClInclude Include="Graphics\Textures\CubeMap.h" />
     <ClInclude Include="Graphics\Textures\ITexture.h" />
     <ClInclude Include="Graphics\Textures\Atlas.h" />
@@ -245,6 +251,8 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\API\Direct3D\D3DShaderProgram.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLXRenderer.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Objects\Cameras\CameraManager.cpp" />
     <ClCompile Include="Graphics\Colors.cpp" />
@@ -275,6 +283,5 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <Text Include="vert.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
