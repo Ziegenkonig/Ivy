@@ -10,11 +10,11 @@ namespace Ivy {
     namespace Graphics {
         class RendererFactory {
         public:
-            static bool GetRenderer(std::shared_ptr<IRenderer>* renderer, 
-                NativeWindow window, NativeDisplay display, RendererPath type, 
+            static bool GetRenderer(NativeWindow window, 
+                NativeDisplay display, RendererPath type, 
                 int colorBits, int depthBits, int stencilBits, 
                 int numSamples,int swapInterval, bool enableMultisampling, 
-                bool enableDebug) {
+                bool enableDebug, std::shared_ptr<IRenderer>* renderer) {
 #ifdef _WIN32
 // Use D3D by default unless overridden.
 #ifndef IVY_FORCE_OPENGL

@@ -1,0 +1,4 @@
+#ifndef IVY_PRIMITIVE_SPHERE_H
+#define IVY_PRIMITIVE_SPHERE_H
+
+#endif 

@@ -51,6 +51,8 @@ namespace Ivy {
 
             ShaderProgram* m_Program;
 
+            GLint m_UniformBufferLocation;
+
             GLint m_ModelLocation;
             GLint m_ViewLocation;
             GLint m_ProjectionLocation;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace Ivy {
     namespace Graphics {
         enum class ShaderType {

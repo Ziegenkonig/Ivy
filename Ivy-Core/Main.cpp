@@ -1,4 +1,5 @@
-#if 0
+#ifdef USE_GL
+// Force Ivy to use OpenGL on Windows.
 #define IVY_FORCE_OPENGL
 #endif
 
@@ -18,20 +19,19 @@ int main(int argc, char** argv)
     if (window.Create())
     {
         std::shared_ptr<IRenderer> renderer;
-        if (!RendererFactory::GetRenderer(&renderer, window.GetPlatformWindow(),
-            window.GetPlatformDisplay(), RendererPath::Forward, 32, 24, 8, 1, 1, true, false))
+        // Generate a renderer object we can use.
+        if (!RendererFactory::GetRenderer(window.GetPlatformWindow(),
+            window.GetPlatformDisplay(), RendererPath::Forward, 32,
+            24, 8, 1, 1, true, false, &renderer))
             return false;
 
-        std::shared_ptr<IShaderProgram> shaderProgram;
-        renderer->CreateShaderProgram(&shaderProgram);
-        int location = shaderProgram->GetBlockLocation(ShaderType::Vertex, "ivy_MVP");
-#if 0
+#ifdef USE_GL
         ShaderProgram program("vert.txt", "fragNoTextures.txt");
         program.Create();
         ShaderProgram programTextured("vert.txt", "fragWithTextures.txt");
         programTextured.Create();
 
-        Camera camera(&programTextured, glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f), 
+        Camera camera(&programTextured, glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f),
             glm::radians(45.0f), 1080, 720, 0.1f, 1000.0f);
         camera.Create();
 
@@ -50,7 +50,7 @@ int main(int argc, char** argv)
         while (window.open)
         {
             renderer->Clear(Colors::CornflowerBlue);
-#if 0       
+#ifdef USE_GL       
             model2.Draw();
             model3.Draw();
             model4.Draw();
