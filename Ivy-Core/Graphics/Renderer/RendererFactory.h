@@ -29,7 +29,8 @@ namespace Ivy {
 #elif
                  
 #endif
-                return renderer->get()->Startup();
+                // ensure renderer is valid.
+                return renderer != nullptr;
             }
         };
     }

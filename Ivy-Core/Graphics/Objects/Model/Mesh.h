@@ -30,6 +30,7 @@ SOFTWARE.
 #include "../../Shaders/ShaderProgram.h"
 #include "../../Buffers/VertexBuffer.h"
 #include "../../Buffers/ElementBuffer.h"
+#include "../../Buffers/NewUniformBuffer.h"
 #include "../../UniformBuffer.h"
 #include "../../Textures/Texture2D.h"
 

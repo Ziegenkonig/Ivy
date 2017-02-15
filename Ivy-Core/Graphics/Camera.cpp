@@ -24,10 +24,13 @@ SOFTWARE.
 
 #include "Camera.h"
 
-void Ivy::Graphics::Camera::Create() {
+void Ivy::Graphics::Camera::SetShader(ShaderProgram* shader) {
+    m_Program = shader;
+    m_UniformBuffer = UniformBuffer(m_Program);
+    
     m_UniformBuffer.GetViewLocation();
     m_UniformBuffer.GetProjectionLocation();
-    
+
     m_UniformBuffer.SetViewMatrix(glm::lookAt(m_Position, m_Target, glm::vec3(0.0f, 1.0f, 0.0f)));
     m_UniformBuffer.SetProjectionMatrix(glm::perspective(m_FieldOfView, static_cast<float>(m_Width) / m_Height, m_ClippingPlaneNear, m_ClippingPlaneFar));
 }

@@ -1,3 +1,4 @@
+#define USE_GL
 #ifdef USE_GL
 // Force Ivy to use OpenGL on Windows.
 #define IVY_FORCE_OPENGL
@@ -25,33 +26,42 @@ int main(int argc, char** argv)
             24, 8, 1, 1, true, false, &renderer))
             return false;
 
+        renderer->Startup();
+
 #ifdef USE_GL
-        ShaderProgram program("vert.txt", "fragNoTextures.txt");
-        program.Create();
-        ShaderProgram programTextured("vert.txt", "fragWithTextures.txt");
-        programTextured.Create();
+        ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");
+        programNoTextures.Create();
+        ShaderProgram programWithTextures("vert.txt", "fragWithTextures.txt");
+        programWithTextures.Create();
 
-        Camera camera(&programTextured, glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f),
+        Camera camera(glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f),
             glm::radians(45.0f), 1080, 720, 0.1f, 1000.0f);
-        camera.Create();
 
-        Model model2(&programTextured);
+        Model model(&programNoTextures);
+        model.Load("monocube.dae");
+        model.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+
+        Model model2(&programNoTextures);
         model2.Load("monocube.dae");
         model2.SetPosition(glm::vec3(0.0f, 5.0f, 0.0f));
 
-        Model model3(&programTextured);
+        Model model3(&programWithTextures);
         model3.Load("monocube.dae");
         model3.SetPosition(glm::vec3(5.0f, 0.0f, 0.0f));
 
-        Model model4(&programTextured);
+        Model model4(&programWithTextures);
         model4.Load("monocube.dae");
         model4.SetPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
 #endif
         while (window.open)
         {
             renderer->Clear(Colors::CornflowerBlue);
-#ifdef USE_GL       
+#ifdef USE_GL
+
+            camera.SetShader(&programNoTextures);
+            model.Draw();
             model2.Draw();
+            camera.SetShader(&programWithTextures);
             model3.Draw();
             model4.Draw();
 
@@ -62,6 +72,8 @@ int main(int argc, char** argv)
             renderer->Present();
             window.PollWindowEvents();
         }
+
+        renderer->Shutdown();
     }
 
     return 0;

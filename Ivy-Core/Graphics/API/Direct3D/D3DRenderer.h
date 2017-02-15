@@ -3,11 +3,9 @@
 
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <d3d11.h>
 #include <wrl/client.h>
 
-#include "../../IDrawable.h"
 #include "../../Renderer/IRenderer.h"
 
 using namespace Microsoft::WRL;
@@ -47,8 +45,6 @@ namespace Ivy {
 
         private:
 
-            std::queue<IDrawable> m_DrawQueue;
-            
             ComPtr<ID3D11Device> m_pDevice;
             ComPtr<ID3D11DeviceContext> m_pDeviceContext;
             ComPtr<IDXGISwapChain> m_pSwapChain;

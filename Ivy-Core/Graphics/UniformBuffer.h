@@ -33,6 +33,7 @@ namespace Ivy {
     namespace Graphics {
         class IVY_API UniformBuffer {
         public:
+            UniformBuffer() {}
             UniformBuffer(ShaderProgram* program) : m_Program(program) {}
         
             void GetModelLocation(void);
@@ -50,8 +51,6 @@ namespace Ivy {
         private:
 
             ShaderProgram* m_Program;
-
-            GLint m_UniformBufferLocation;
 
             GLint m_ModelLocation;
             GLint m_ViewLocation;

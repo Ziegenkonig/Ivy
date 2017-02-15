@@ -200,12 +200,14 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClInclude Include="Graphics\API\IConstantBuffer.h" />
     <ClInclude Include="Graphics\API\IIndexBuffer.h" />
     <ClInclude Include="Graphics\API\IVertexBuffer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLConstantBuffer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLIndexBuffer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLShaderProgram.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLTexture2D.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLVertexBuffer.h" />
     <ClInclude Include="Graphics\Buffers\NewUniformBuffer.h" />
     <ClInclude Include="Graphics\Camera.h" />
-    <ClInclude Include="Graphics\IDrawable.h" />
     <ClInclude Include="Graphics\Light\Light.h" />
-    <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Cube.h" />
     <ClInclude Include="Graphics\Objects\Listener\AudioListener.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Cylinder.h" />

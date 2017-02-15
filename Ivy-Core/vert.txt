@@ -17,6 +17,14 @@ uniform mat4 ivy_Model;
 uniform mat4 ivy_View;
 uniform mat4 ivy_Projection;
 
+/*
+uniform ivy_MVP {
+    mat4 ivy_Model;
+    mat4 ivy_View;
+    mat4 ivy_Projection;
+};
+*/
+
 out mediump vec4 frag_Color0;
 out mediump vec4 frag_Color1;
 out mediump vec3 frag_Normal;

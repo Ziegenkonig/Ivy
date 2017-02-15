@@ -128,7 +128,8 @@ bool Ivy::Graphics::WGLRenderer::Startup(void) {
         && !wglewIsSupported("WGL_ARB_multisample") && !wglewIsSupported("WGL_EXT_swap_control"))
         return false;
 
-    if (!glewIsSupported("GL_ARB_separate_shader_objects") && !glewIsSupported("GL_ARB_get_program_binary"))
+    if (!glewIsSupported("GL_ARB_separate_shader_objects") && !glewIsSupported("GL_ARB_get_program_binary") 
+        && !glewIsSupported("GL_ARB_program_interface_query"))
         return false;
 
     // Choose final pixel format
@@ -187,6 +188,10 @@ bool Ivy::Graphics::WGLRenderer::Startup(void) {
         return false;
 
     wglSwapIntervalEXT(m_SwapInterval);
+
+    GLint n;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &n);
+    std::cout << n << std::endl;
 
     // Enable default depth and stencil testing.
     glEnable(GL_DEPTH_TEST);

@@ -27,14 +27,15 @@ SOFTWARE.
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Buffers/NewUniformBuffer.h"
 #include "UniformBuffer.h"
 
 namespace Ivy {
     namespace Graphics {
         class IVY_API Camera {
         public:
-            Camera(ShaderProgram* program, glm::vec3 position, glm::vec3 target, float fieldOfView, unsigned int width, unsigned int height, float clippingPlaneNear, float clippingPlaneFar) :
-                m_Program(program), m_UniformBuffer(program) {
+            Camera(glm::vec3 position, glm::vec3 target, float fieldOfView, unsigned int width, 
+                unsigned int height, float clippingPlaneNear, float clippingPlaneFar) {
                 m_Position = position;
                 m_Target = target;
                 m_FieldOfView = fieldOfView;
@@ -44,7 +45,7 @@ namespace Ivy {
                 m_ClippingPlaneFar = clippingPlaneFar;
             }
 
-            void Create();
+            void SetShader(ShaderProgram* shader);
 
             glm::vec3 GetCameraPosition(void) { return m_Position; }
             void SetCameraPosition(glm::vec3 position);

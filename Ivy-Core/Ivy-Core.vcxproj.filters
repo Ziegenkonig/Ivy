@@ -53,7 +53,6 @@
     <ClInclude Include="Graphics\Shaders\IShaderProgram.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLShaderProgram.h" />
     <ClInclude Include="Graphics\Shaders\ShaderProgramFactory.h" />
-    <ClInclude Include="Graphics\IDrawable.h" />
     <ClInclude Include="Graphics\API\IVertexBuffer.h" />
     <ClInclude Include="Graphics\API\IIndexBuffer.h" />
     <ClInclude Include="Graphics\API\IConstantBuffer.h" />
@@ -62,7 +61,10 @@
     <ClInclude Include="Graphics\Objects\Primitives\Sphere.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Cylinder.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Pyramid.h" />
-    <ClInclude Include="Graphics\Material.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLTexture2D.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLVertexBuffer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLIndexBuffer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLConstantBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />

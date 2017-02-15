@@ -48,7 +48,6 @@ void Ivy::Graphics::Mesh::Draw(void) {
         m_Textures[i].MakeActive();
 
     m_ElementBuffer.Draw();
-
     m_VertexBuffer.Unbind();
     m_ElementBuffer.Unbind();
 
