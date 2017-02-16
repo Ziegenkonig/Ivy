@@ -1,23 +1,17 @@
-#ifndef IVY_D3DRENDERER_H
-#define IVY_D3DRENDERER_H
+#pragma once
 
 #include <iostream>
-#include <vector>
-#include <d3d11.h>
-#include <wrl/client.h>
 
 #include "../../Renderer/IRenderer.h"
 
-using namespace Microsoft::WRL;
-
 namespace Ivy {
     namespace Graphics {
-        class D3DRenderer : public IRenderer {
+        class EGLRenderer : public IRenderer {
         public:
-            D3DRenderer(NativeWindow window, NativeDisplay display, RendererPath path, 
+            EGLRenderer(NativeWindow window, NativeDisplay display, RendererPath path,
                 int colorBits, int depthBits, int stencilBits, int numSamples,
                 int swapInterval, bool enableMultisampling, bool enableDebug);
-            ~D3DRenderer();
+            ~EGLRenderer();
 
             // Inherited via IRenderer
             virtual RendererAPI GetRendererAPI(void) override;
@@ -40,23 +34,9 @@ namespace Ivy {
             virtual bool Startup(void) override;
             virtual void Shutdown(void) override;
 
-            ComPtr<ID3D11Device>& GetID3D11Device(void);
-            ComPtr<ID3D11DeviceContext>& GetID3D11DeviceContext(void);
-            ComPtr<IDXGISwapChain>& GetIDXGISwapChain(void);
-            ComPtr<ID3D11RenderTargetView>& GetID3D11RenderTargetView(void);
-
         private:
 
-            ComPtr<ID3D11Device> m_pDevice;
-            ComPtr<ID3D11DeviceContext> m_pDeviceContext;
-            ComPtr<IDXGISwapChain> m_pSwapChain;
-            ComPtr<ID3D11RenderTargetView> m_pRenderTargetView;
-            ComPtr<ID3D11RasterizerState> m_pRasterizerState;
-            ComPtr<ID3D11Debug> m_pDebug;
-
-            D3D_FEATURE_LEVEL m_FeatureLevel;
-            D3D11_VIEWPORT m_Viewport;
-
+            NativeContext m_NativeContext;
             NativeWindow m_NativeWindow;
             NativeDisplay m_NativeDisplay;
             int m_RendererVersionMajor;
@@ -73,5 +53,3 @@ namespace Ivy {
         };
     }
 }
-
-#endif

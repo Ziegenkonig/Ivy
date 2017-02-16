@@ -22,28 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef IVY_GLINDEXBUFFER_H
-#define IVY_GLINDEXBUFFER_H
+#include "GLIndexBuffer.h"
 
-#include "../../Buffers/IDrawableBuffer.h"
-#include "../../Renderer/IRenderer.h"
-
-namespace Ivy {
-    namespace Graphics {
-        class IVY_API GLIndexBuffer : public IDrawableBuffer<GLushort> {
-        public:
-            void Bind(void);
-            void Create(void);
-            void Destroy(void);
-            void Draw(void);
-            void SetData(std::vector<GLushort> indices);
-            void Unbind(void);
-
-        private:
-            GLuint m_IndexBuffer;
-            std::vector<GLushort> m_Indices;
-        };
-    }
+void Ivy::Graphics::GLIndexBuffer::Bind(void) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
 }
 
-#endif // IVY_GLINDEXBUFFER_H
+void Ivy::Graphics::GLIndexBuffer::Create(void) {
+    glGenBuffers(1, &m_IndexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() *
+        sizeof(GLushort), reinterpret_cast<void**>(m_Indices.data()), GL_STATIC_DRAW);
+}
+
+void Ivy::Graphics::GLIndexBuffer::Destroy(void) {
+    glDeleteBuffers(1, &m_IndexBuffer);
+}
+
+void Ivy::Graphics::GLIndexBuffer::Draw(void) {
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_Indices.size()),
+        GL_UNSIGNED_SHORT, nullptr);
+}
+
+void Ivy::Graphics::GLIndexBuffer::SetData(std::vector<GLushort> indices) {
+    m_Indices = indices;
+}
+
+void Ivy::Graphics::GLIndexBuffer::Unbind(void) {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_NONE);
+}

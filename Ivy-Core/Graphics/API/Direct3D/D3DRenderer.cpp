@@ -35,6 +35,14 @@ bool Ivy::Graphics::D3DRenderer::CreateTexture(std::shared_ptr<ITexture>* textur
     return false;
 }
 
+bool Ivy::Graphics::D3DRenderer::CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) {
+    return false;
+}
+
+bool Ivy::Graphics::D3DRenderer::CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) {
+    return false;
+}
+
 int Ivy::Graphics::D3DRenderer::GetBackBufferWidth()
 {
     return 0;

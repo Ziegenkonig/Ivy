@@ -1,4 +1,6 @@
 #include "WGLRenderer.h"
+#include "GLVertexBuffer.h"
+#include "GLIndexBuffer.h"
 
 Ivy::Graphics::WGLRenderer::WGLRenderer(NativeWindow window, NativeDisplay display,
     RendererPath path, int colorBits, int depthBits, int stencilBits,
@@ -37,6 +39,14 @@ bool Ivy::Graphics::WGLRenderer::CreateTexture(std::shared_ptr<ITexture>* textur
     return false;
 }
 
+bool Ivy::Graphics::WGLRenderer::CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) {
+    return (*buffer = std::make_shared<GLVertexBuffer>()) != nullptr;
+}
+
+bool Ivy::Graphics::WGLRenderer::CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) {
+    return (*buffer = std::make_shared<GLIndexBuffer>()) != nullptr;
+}
+
 int Ivy::Graphics::WGLRenderer::GetBackBufferWidth()
 {
     return 0;
@@ -49,17 +59,17 @@ int Ivy::Graphics::WGLRenderer::GetBackBufferHeight()
 
 int Ivy::Graphics::WGLRenderer::GetColorBits()
 {
-    return 0;
+    return m_ColorBits;
 }
 
 int Ivy::Graphics::WGLRenderer::GetDepthBits()
 {
-    return 0;
+    return m_DepthBits;
 }
 
 int Ivy::Graphics::WGLRenderer::GetStencilBits()
 {
-    return 0;
+    return m_StencilBits;
 }
 
 RendererAPI Ivy::Graphics::WGLRenderer::GetRendererAPI(void) {

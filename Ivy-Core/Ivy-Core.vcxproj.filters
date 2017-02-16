@@ -65,6 +65,8 @@
     <ClInclude Include="Graphics\API\OpenGL\GLVertexBuffer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLIndexBuffer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLConstantBuffer.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DTexture2D.h" />
+    <ClInclude Include="Graphics\API\OpenGL\EGLRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
@@ -93,6 +95,9 @@
     <ClCompile Include="Graphics\API\Direct3D\D3DShaderProgram.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Graphics\Buffers\NewUniformBuffer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLVertexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLIndexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\EGLRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />

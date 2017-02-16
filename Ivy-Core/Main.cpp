@@ -1,8 +1,4 @@
-#define USE_GL
-#ifdef USE_GL
-// Force Ivy to use OpenGL on Windows.
 #define IVY_FORCE_OPENGL
-#endif
 
 #include "Window.h"
 #include "Graphics/Camera.h"
@@ -28,7 +24,7 @@ int main(int argc, char** argv)
 
         renderer->Startup();
 
-#ifdef USE_GL
+#ifdef IVY_FORCE_OPENGL
         ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");
         programNoTextures.Create();
         ShaderProgram programWithTextures("vert.txt", "fragWithTextures.txt");
@@ -56,8 +52,8 @@ int main(int argc, char** argv)
         while (window.open)
         {
             renderer->Clear(Colors::CornflowerBlue);
-#ifdef USE_GL
 
+#ifdef IVY_FORCE_OPENGL
             camera.SetShader(&programNoTextures);
             model.Draw();
             model2.Draw();
@@ -69,6 +65,7 @@ int main(int argc, char** argv)
             model3.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));
             model4.SetRotation(glm::vec3(0.0f, 0.0f, 1.0f));
 #endif
+
             renderer->Present();
             window.PollWindowEvents();
         }

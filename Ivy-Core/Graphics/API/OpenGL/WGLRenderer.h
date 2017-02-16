@@ -22,6 +22,8 @@ namespace Ivy {
             virtual void Clear(glm::vec3 color) override;
             virtual bool CreateShaderProgram(std::shared_ptr<IShaderProgram>* shaderProgram) override;
             virtual bool CreateTexture(std::shared_ptr<ITexture>* texture, TextureType type) override;
+            virtual bool CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) override;
+            virtual bool CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) override;
             virtual int GetBackBufferWidth(void) override;
             virtual int GetBackBufferHeight(void) override;
             virtual int GetColorBits(void) override;
