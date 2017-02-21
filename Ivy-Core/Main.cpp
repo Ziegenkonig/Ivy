@@ -24,11 +24,16 @@ int main(int argc, char** argv)
 
         renderer->Startup();
 
+        std::shared_ptr<IShader> shader;
+        renderer->CreateShader(ShaderType::Vertex, "vert.txt", &shader);
+        if (!shader->Create())
+            return false;
+
+        int location = shader->GetVariableLocation(VariableType::Attribute, "ivy_Normal");
+/*
 #ifdef IVY_FORCE_OPENGL
         ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");
         programNoTextures.Create();
-        ShaderProgram programWithTextures("vert.txt", "fragWithTextures.txt");
-        programWithTextures.Create();
 
         Camera camera(glm::vec3(0.0f, 2.0f, -10.0f), glm::vec3(0.0f, 2.0f, 0.0f),
             glm::radians(45.0f), 1080, 720, 0.1f, 1000.0f);
@@ -40,31 +45,20 @@ int main(int argc, char** argv)
         Model model2(&programNoTextures);
         model2.Load("monocube.dae");
         model2.SetPosition(glm::vec3(0.0f, 5.0f, 0.0f));
-
-        Model model3(&programWithTextures);
-        model3.Load("monocube.dae");
-        model3.SetPosition(glm::vec3(5.0f, 0.0f, 0.0f));
-
-        Model model4(&programWithTextures);
-        model4.Load("monocube.dae");
-        model4.SetPosition(glm::vec3(-5.0f, 0.0f, 0.0f));
 #endif
+*/
         while (window.open)
         {
             renderer->Clear(Colors::CornflowerBlue);
-
+/*
 #ifdef IVY_FORCE_OPENGL
             camera.SetShader(&programNoTextures);
             model.Draw();
             model2.Draw();
-            camera.SetShader(&programWithTextures);
-            model3.Draw();
-            model4.Draw();
 
             model2.SetRotation(glm::vec3(1.0f, 1.0f, 0.0f));
-            model3.SetRotation(glm::vec3(0.0f, 1.0f, 0.0f));
-            model4.SetRotation(glm::vec3(0.0f, 0.0f, 1.0f));
 #endif
+*/
 
             renderer->Present();
             window.PollWindowEvents();

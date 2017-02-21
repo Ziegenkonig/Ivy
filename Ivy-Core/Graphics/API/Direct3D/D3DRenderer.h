@@ -19,6 +19,13 @@ namespace Ivy {
                 int swapInterval, bool enableMultisampling, bool enableDebug);
             ~D3DRenderer();
 
+            ComPtr<ID3D11Device>& GetID3D11Device(void);
+            ComPtr<ID3D11DeviceContext>& GetID3D11DeviceContext(void);
+            ComPtr<IDXGISwapChain>& GetIDXGISwapChain(void);
+            ComPtr<ID3D11RenderTargetView>& GetID3D11RenderTargetView(void);
+
+        protected:
+
             // Inherited via IRenderer
             virtual RendererAPI GetRendererAPI(void) override;
             virtual RendererPath GetRendererPath(void) override;
@@ -26,10 +33,11 @@ namespace Ivy {
             virtual int GetVersionMinor(void) override;
             virtual void AdjustViewport(int width, int height) override;
             virtual void Clear(glm::vec3 color) override;
-            virtual bool CreateShaderProgram(std::shared_ptr<IShaderProgram>* shaderProgram) override;
-            virtual bool CreateTexture(std::shared_ptr<ITexture>* texture, TextureType type) override;
+            virtual bool CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shaderProgram) override;
+            virtual bool CreateTexture(TextureType type, std::shared_ptr<ITexture>* texture) override;
             virtual bool CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) override;
             virtual bool CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) override;
+            virtual bool CreateConstantBuffer(std::shared_ptr<IShader> shaderProgram, std::shared_ptr<IConstantBuffer>* buffer) override;
             virtual int GetBackBufferWidth(void) override;
             virtual int GetBackBufferHeight(void) override;
             virtual int GetColorBits(void) override;
@@ -39,11 +47,6 @@ namespace Ivy {
             virtual void Present(void) override;
             virtual bool Startup(void) override;
             virtual void Shutdown(void) override;
-
-            ComPtr<ID3D11Device>& GetID3D11Device(void);
-            ComPtr<ID3D11DeviceContext>& GetID3D11DeviceContext(void);
-            ComPtr<IDXGISwapChain>& GetIDXGISwapChain(void);
-            ComPtr<ID3D11RenderTargetView>& GetID3D11RenderTargetView(void);
 
         private:
 

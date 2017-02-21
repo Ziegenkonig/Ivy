@@ -1,6 +1,8 @@
 #include "WGLRenderer.h"
 #include "GLVertexBuffer.h"
 #include "GLIndexBuffer.h"
+#include "GLConstantBuffer.h"
+#include "GLShader.h"
 
 Ivy::Graphics::WGLRenderer::WGLRenderer(NativeWindow window, NativeDisplay display,
     RendererPath path, int colorBits, int depthBits, int stencilBits,
@@ -31,11 +33,11 @@ void Ivy::Graphics::WGLRenderer::Clear(glm::vec3 color) {
     glClearColor(color.r, color.g, color.b, 1.0f);
 }
 
-bool Ivy::Graphics::WGLRenderer::CreateShaderProgram(std::shared_ptr<IShaderProgram>* shaderProgram) {
-    return false;
+bool Ivy::Graphics::WGLRenderer::CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shader) {
+    return (*shader = std::make_shared<GLShader>(type, path)) != nullptr;
 }
 
-bool Ivy::Graphics::WGLRenderer::CreateTexture(std::shared_ptr<ITexture>* texture, TextureType type) {
+bool Ivy::Graphics::WGLRenderer::CreateTexture(TextureType type, std::shared_ptr<ITexture>* texture) {
     return false;
 }
 
@@ -45,6 +47,10 @@ bool Ivy::Graphics::WGLRenderer::CreateVertexBuffer(std::shared_ptr<IDrawableBuf
 
 bool Ivy::Graphics::WGLRenderer::CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) {
     return (*buffer = std::make_shared<GLIndexBuffer>()) != nullptr;
+}
+
+bool Ivy::Graphics::WGLRenderer::CreateConstantBuffer(std::shared_ptr<IShader> shader, std::shared_ptr<IConstantBuffer>* buffer) {
+    return (*buffer = std::make_shared<GLConstantBuffer>(static_cast<GLShader*>(shader.get()))) != nullptr;
 }
 
 int Ivy::Graphics::WGLRenderer::GetBackBufferWidth()

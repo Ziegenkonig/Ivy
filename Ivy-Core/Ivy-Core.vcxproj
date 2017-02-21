@@ -77,6 +77,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_STATIC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -108,6 +109,7 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_EXPORT_SYMBOLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -138,6 +140,7 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_EXPORT_SYMBOLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -170,6 +173,7 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\assimp\include\;$(SolutionDir)Dependencies\GLEW\include\;$(SolutionDir)Dependencies\glm\include\;$(SolutionDir)Dependencies\miniz\;$(SolutionDir)Dependencies\FreeImage\include\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IVY_EXPORT_SYMBOLS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -195,17 +199,13 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Graphics\API\Direct3D\D3DIndexBuffer.h" />
-    <ClInclude Include="Graphics\API\Direct3D\D3DShaderProgram.h" />
-    <ClInclude Include="Graphics\API\Direct3D\D3DTexture2D.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DShader.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DVertexBuffer.h" />
     <ClInclude Include="Graphics\API\IConstantBuffer.h" />
-    <ClInclude Include="Graphics\API\IIndexBuffer.h" />
-    <ClInclude Include="Graphics\API\IVertexBuffer.h" />
-    <ClInclude Include="Graphics\API\OpenGL\EGLRenderer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLConstantBuffer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLIndexBuffer.h" />
-    <ClInclude Include="Graphics\API\OpenGL\GLShaderProgram.h" />
-    <ClInclude Include="Graphics\API\OpenGL\GLTexture2D.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLRenderer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLShader.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLVertexBuffer.h" />
     <ClInclude Include="Graphics\Buffers\NewUniformBuffer.h" />
     <ClInclude Include="Graphics\Camera.h" />
@@ -236,7 +236,7 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClInclude Include="Graphics\Renderer\RendererFactory.h" />
     <ClInclude Include="Graphics\Renderer\RendererTypes.h" />
     <ClInclude Include="Graphics\API\OpenGL\WGLRenderer.h" />
-    <ClInclude Include="Graphics\Shaders\IShaderProgram.h" />
+    <ClInclude Include="Graphics\Shaders\IShader.h" />
     <ClInclude Include="Graphics\Shaders\ShaderProgramFactory.h" />
     <ClInclude Include="Graphics\Textures\CubeMap.h" />
     <ClInclude Include="Graphics\Textures\ITexture.h" />
@@ -255,16 +255,17 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClInclude Include="IO\Image.h" />
     <ClInclude Include="IO\Log.h" />
     <ClInclude Include="Symbols.h" />
-    <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\UniformBuffer.h" />
     <ClInclude Include="Graphics\Buffers\VertexBuffer.h" />
     <ClInclude Include="Graphics\Buffers\Vertex.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Graphics\API\Direct3D\D3DShaderProgram.cpp" />
-    <ClCompile Include="Graphics\API\OpenGL\EGLRenderer.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DIndexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DVertexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLConstantBuffer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\GLIndexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLShader.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\GLVertexBuffer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\GLXRenderer.cpp" />
     <ClCompile Include="Graphics\Buffers\NewUniformBuffer.cpp" />
@@ -285,7 +286,6 @@ if $(PlatformTarget) == x64 xcopy /f /y /s "$(SolutionDir)Dependencies\assimp\bi
     <ClCompile Include="Graphics\Buffers\ElementBuffer.cpp" />
     <ClCompile Include="Graphics\Objects\Model\Model.cpp" />
     <ClCompile Include="Graphics\Shaders\ShaderProgram.cpp" />
-    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\UniformBuffer.cpp" />
     <ClCompile Include="Graphics\Buffers\VertexBuffer.cpp" />
     <ClCompile Include="IO\Image.cpp" />

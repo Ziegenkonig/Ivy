@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClInclude Include="Window.h" />
     <ClInclude Include="Symbols.h" />
-    <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\UniformBuffer.h" />
     <ClInclude Include="IO\File.h" />
     <ClInclude Include="Graphics\Camera.h" />
@@ -43,34 +42,29 @@
     <ClInclude Include="Graphics\Renderer\RendererTypes.h" />
     <ClInclude Include="IO\Image.h" />
     <ClInclude Include="Graphics\Renderer\DepthStencil.h" />
-    <ClInclude Include="Graphics\API\Direct3D\D3DShaderProgram.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DVertexBuffer.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DIndexBuffer.h" />
     <ClInclude Include="IO\Log.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DRenderer.h" />
     <ClInclude Include="Graphics\API\OpenGL\WGLRenderer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLXRenderer.h" />
-    <ClInclude Include="Graphics\Shaders\IShaderProgram.h" />
-    <ClInclude Include="Graphics\API\OpenGL\GLShaderProgram.h" />
     <ClInclude Include="Graphics\Shaders\ShaderProgramFactory.h" />
-    <ClInclude Include="Graphics\API\IVertexBuffer.h" />
-    <ClInclude Include="Graphics\API\IIndexBuffer.h" />
     <ClInclude Include="Graphics\API\IConstantBuffer.h" />
     <ClInclude Include="Graphics\Buffers\NewUniformBuffer.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Cube.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Sphere.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Cylinder.h" />
     <ClInclude Include="Graphics\Objects\Primitives\Pyramid.h" />
-    <ClInclude Include="Graphics\API\OpenGL\GLTexture2D.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLVertexBuffer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLIndexBuffer.h" />
     <ClInclude Include="Graphics\API\OpenGL\GLConstantBuffer.h" />
-    <ClInclude Include="Graphics\API\Direct3D\D3DTexture2D.h" />
-    <ClInclude Include="Graphics\API\OpenGL\EGLRenderer.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLShader.h" />
+    <ClInclude Include="Graphics\API\OpenGL\GLRenderer.h" />
+    <ClInclude Include="Graphics\Shaders\IShader.h" />
+    <ClInclude Include="Graphics\API\Direct3D\D3DShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />
-    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\UniformBuffer.cpp" />
     <ClCompile Include="IO\File.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
@@ -92,12 +86,14 @@
     <ClCompile Include="Graphics\API\Direct3D\D3DRenderer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\WGLRenderer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\GLXRenderer.cpp" />
-    <ClCompile Include="Graphics\API\Direct3D\D3DShaderProgram.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Graphics\Buffers\NewUniformBuffer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\GLVertexBuffer.cpp" />
     <ClCompile Include="Graphics\API\OpenGL\GLIndexBuffer.cpp" />
-    <ClCompile Include="Graphics\API\OpenGL\EGLRenderer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLConstantBuffer.cpp" />
+    <ClCompile Include="Graphics\API\OpenGL\GLShader.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DVertexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DIndexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />

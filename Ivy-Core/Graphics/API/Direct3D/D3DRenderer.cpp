@@ -1,5 +1,5 @@
 #include "D3DRenderer.h"
-#include "D3DShaderProgram.h"
+#include "D3DVertexBuffer.h"
 
 Ivy::Graphics::D3DRenderer::D3DRenderer(NativeWindow window, NativeDisplay display, 
     RendererPath path, int colorBits, int depthBits, int stencilBits,
@@ -27,19 +27,23 @@ void Ivy::Graphics::D3DRenderer::Clear(glm::vec3 color) {
     m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), &color[0]);
 }
 
-bool Ivy::Graphics::D3DRenderer::CreateShaderProgram(std::shared_ptr<IShaderProgram>* shaderProgram) {
-    return (*shaderProgram = std::make_shared<D3DShaderProgram>(this)) != nullptr;
+bool Ivy::Graphics::D3DRenderer::CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shaderProgram) {
+    return false;
 }
 
-bool Ivy::Graphics::D3DRenderer::CreateTexture(std::shared_ptr<ITexture>* texture, TextureType type) {
+bool Ivy::Graphics::D3DRenderer::CreateTexture(TextureType type, std::shared_ptr<ITexture>* texture) {
     return false;
 }
 
 bool Ivy::Graphics::D3DRenderer::CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) {
-    return false;
+    return (*buffer = std::make_shared<D3DVertexBuffer>(this)) != nullptr;
 }
 
 bool Ivy::Graphics::D3DRenderer::CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) {
+    return false;
+}
+
+bool Ivy::Graphics::D3DRenderer::CreateConstantBuffer(std::shared_ptr<IShader> shaderProgram, std::shared_ptr<IConstantBuffer>* buffer) {
     return false;
 }
 

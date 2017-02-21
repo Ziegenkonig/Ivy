@@ -55,7 +55,6 @@ glm::mat4 Ivy::Graphics::UniformBuffer::GetProjectionMatrix(void) {
 }
 
 void Ivy::Graphics::UniformBuffer::SetModelMatrix(glm::mat4 matrix) {
-    //GLint location = glGetUniformBlockIndex(m_Program->GetProgramID(), "ivy_MVP");
     m_ModelMatrix = matrix;
     glUniformMatrix4fv(m_ModelLocation, 1, GL_FALSE, glm::value_ptr(m_ModelMatrix));
 }

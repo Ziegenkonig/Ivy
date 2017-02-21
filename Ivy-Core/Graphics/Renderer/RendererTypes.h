@@ -29,4 +29,10 @@ enum class RendererPath {
     Forward,
 };
 
+enum class UpdateType {
+    Immutable,
+    Static,
+    Dynamic,
+};
+
 #endif

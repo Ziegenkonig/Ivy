@@ -33,6 +33,7 @@ namespace Ivy {
     namespace Graphics {
         class IVY_API GLVertexBuffer : public IDrawableBuffer<Vertex> {
         public:
+            
             void Bind(void) override;
             void Create(void) override;
             void Destroy(void) override;
@@ -41,6 +42,7 @@ namespace Ivy {
             void Unbind(void) override;
 
         private:
+            
             GLuint m_VertexArray;
             GLuint m_VertexBuffer;
             std::vector<Vertex> m_Vertices;
