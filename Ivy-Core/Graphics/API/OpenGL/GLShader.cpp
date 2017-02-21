@@ -52,28 +52,6 @@ bool Ivy::Graphics::GLShader::Create() {
         return false;
     }
 
-    // Vertex Shader requires us to explicity relink our program 
-    // to the pipeline so we can bind the attributes manually.
-    if (m_ShaderType == ShaderType::Vertex) {
-        // Bind the following attributes for the vertex shader slots.
-        glBindAttribLocation(m_ProgramID, 0, "ivy_Position");
-        glBindAttribLocation(m_ProgramID, 1, "ivy_Color0");
-        glBindAttribLocation(m_ProgramID, 2, "ivy_Color1");
-        glBindAttribLocation(m_ProgramID, 3, "ivy_Normal");
-        glBindAttribLocation(m_ProgramID, 4, "ivy_Tangent");
-        glBindAttribLocation(m_ProgramID, 5, "ivy_Bitangent");
-        glBindAttribLocation(m_ProgramID, 6, "ivy_BlendWeight");
-        glBindAttribLocation(m_ProgramID, 7, "ivy_BlendIndices");
-        glBindAttribLocation(m_ProgramID, 8, "ivy_TexCoord0");
-        glBindAttribLocation(m_ProgramID, 9, "ivy_TexCoord1");
-        glBindAttribLocation(m_ProgramID, 10, "ivy_TexCoord2");
-        glBindAttribLocation(m_ProgramID, 11, "ivy_TexCoord3");
-        glBindAttribLocation(m_ProgramID, 12, "ivy_TexCoord4");
-        glBindAttribLocation(m_ProgramID, 13, "ivy_TexCoord5");
-        glBindAttribLocation(m_ProgramID, 14, "ivy_TexCoord6");
-        glBindAttribLocation(m_ProgramID, 15, "ivy_TexCoord7");
-    }
-
     glGenProgramPipelines(1, &m_PipelineID);
     glUseProgramStages(m_PipelineID, GetShaderEnum(m_ShaderType, true), m_ProgramID);
     return true;

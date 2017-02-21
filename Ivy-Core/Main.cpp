@@ -24,12 +24,19 @@ int main(int argc, char** argv)
 
         renderer->Startup();
 
-        std::shared_ptr<IShader> shader;
-        renderer->CreateShader(ShaderType::Vertex, "vert.txt", &shader);
-        if (!shader->Create())
+        std::shared_ptr<IShader> vshader;
+        renderer->CreateShader(ShaderType::Vertex, "vert.txt", &vshader);
+        if (!vshader->Create())
+            return false;
+        
+        std::shared_ptr<IShader> fshader;
+        renderer->CreateShader(ShaderType::Pixel, "fragWithTextures.txt", &fshader);
+        if (!fshader->Create())
             return false;
 
-        int location = shader->GetVariableLocation(VariableType::Attribute, "ivy_Normal");
+        int vlocation = vshader->GetVariableLocation(VariableType::Attribute, "ivy_Position");
+        int flocation = fshader->GetVariableLocation(VariableType::Uniform, "frag_Sampler0");
+     
 /*
 #ifdef IVY_FORCE_OPENGL
         ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");

@@ -19,6 +19,14 @@ namespace Ivy {
             Vertex,
         };
 
+        enum class InternalType {
+            Integer,
+            Float,
+            Matrix,
+            Vector,
+            Sampler2D,
+        };
+
         struct IShader {
             virtual void Activate() = 0;
             virtual bool Create() = 0;

@@ -205,10 +205,6 @@ bool Ivy::Graphics::WGLRenderer::Startup(void) {
 
     wglSwapIntervalEXT(m_SwapInterval);
 
-    GLint n;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &n);
-    std::cout << n << std::endl;
-
     // Enable default depth and stencil testing.
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_STENCIL_TEST);
@@ -220,7 +216,7 @@ bool Ivy::Graphics::WGLRenderer::Startup(void) {
     glGetIntegerv(GL_VIEWPORT, viewportInfo);
     std::cout << "Resolution: " << viewportInfo[2] << "x" << viewportInfo[3] << std::endl;
 
-    std::cout << "WGLRenderer::Startup has been called." << std::endl;
+    std::cout << "WGLRenderer::Startup | SUCCESS" << std::endl;
     return true;
 }
 
@@ -228,5 +224,5 @@ void Ivy::Graphics::WGLRenderer::Shutdown(void) {
     wglMakeCurrent(m_NativeDisplay, nullptr);
     wglDeleteContext(m_NativeContext);
     ReleaseDC(m_NativeWindow, m_NativeDisplay);
-    std::cout << "WGLRenderer::Shutdown has been has been called." << std::endl;
+    std::cout << "WGLRenderer::Shutdown | SUCCESS" << std::endl;
 }

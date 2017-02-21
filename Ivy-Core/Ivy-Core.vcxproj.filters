@@ -94,6 +94,7 @@
     <ClCompile Include="Graphics\API\OpenGL\GLShader.cpp" />
     <ClCompile Include="Graphics\API\Direct3D\D3DVertexBuffer.cpp" />
     <ClCompile Include="Graphics\API\Direct3D\D3DIndexBuffer.cpp" />
+    <ClCompile Include="Graphics\API\Direct3D\D3DShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="vert.txt" />

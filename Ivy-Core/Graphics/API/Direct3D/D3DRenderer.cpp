@@ -1,4 +1,6 @@
 #include "D3DRenderer.h"
+#include "D3DShader.h"
+#include "D3DIndexBuffer.h"
 #include "D3DVertexBuffer.h"
 
 Ivy::Graphics::D3DRenderer::D3DRenderer(NativeWindow window, NativeDisplay display, 
@@ -27,8 +29,8 @@ void Ivy::Graphics::D3DRenderer::Clear(glm::vec3 color) {
     m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView.Get(), &color[0]);
 }
 
-bool Ivy::Graphics::D3DRenderer::CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shaderProgram) {
-    return false;
+bool Ivy::Graphics::D3DRenderer::CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shader) {
+    return (*shader = std::make_shared<D3DShader>(this, type, path)) != nullptr;
 }
 
 bool Ivy::Graphics::D3DRenderer::CreateTexture(TextureType type, std::shared_ptr<ITexture>* texture) {
@@ -40,7 +42,7 @@ bool Ivy::Graphics::D3DRenderer::CreateVertexBuffer(std::shared_ptr<IDrawableBuf
 }
 
 bool Ivy::Graphics::D3DRenderer::CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) {
-    return false;
+    return (*buffer = std::make_shared<D3DIndexBuffer>(this)) != nullptr;
 }
 
 bool Ivy::Graphics::D3DRenderer::CreateConstantBuffer(std::shared_ptr<IShader> shaderProgram, std::shared_ptr<IConstantBuffer>* buffer) {
@@ -49,27 +51,27 @@ bool Ivy::Graphics::D3DRenderer::CreateConstantBuffer(std::shared_ptr<IShader> s
 
 int Ivy::Graphics::D3DRenderer::GetBackBufferWidth()
 {
-    return 0;
+    return m_BackBufferWidth;
 }
 
 int Ivy::Graphics::D3DRenderer::GetBackBufferHeight()
 {
-    return 0;
+    return m_BackBufferHeight;
 }
 
 int Ivy::Graphics::D3DRenderer::GetColorBits()
 {
-    return 0;
+    return m_ColorBits;
 }
 
 int Ivy::Graphics::D3DRenderer::GetDepthBits()
 {
-    return 0;
+    return m_DepthBits;
 }
 
 int Ivy::Graphics::D3DRenderer::GetStencilBits()
 {
-    return 0;
+    return m_StencilBits;
 }
 
 RendererAPI Ivy::Graphics::D3DRenderer::GetRendererAPI(void)
@@ -94,8 +96,6 @@ bool Ivy::Graphics::D3DRenderer::Initialized(void) {
 }
 
 void Ivy::Graphics::D3DRenderer::Present(void) {
-    if (m_DebugEnabled)
-        m_pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
     m_pSwapChain->Present(1, 0);
 }
 
@@ -160,10 +160,10 @@ bool Ivy::Graphics::D3DRenderer::Startup(void) {
 
     if (m_DebugEnabled) {
         error = m_pDevice.As(&m_pDebug);
-
-        // TODO: Log warning.
         if (FAILED(error))
             return false;
+
+        m_pDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
     }
 
     ComPtr<ID3D11Texture2D> l_pBackBuffer;

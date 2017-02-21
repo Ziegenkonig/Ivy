@@ -4,9 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <d3d11.h>
+#include <d3dcommon.h>
+#include <d3dcompiler.h>
 #include <wrl/client.h>
 
 #include "../../Renderer/IRenderer.h"
+
+#define ivy__uuidof(NAME) IID_##NAME
 
 using namespace Microsoft::WRL;
 
@@ -33,7 +37,7 @@ namespace Ivy {
             virtual int GetVersionMinor(void) override;
             virtual void AdjustViewport(int width, int height) override;
             virtual void Clear(glm::vec3 color) override;
-            virtual bool CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shaderProgram) override;
+            virtual bool CreateShader(ShaderType type, std::string path, std::shared_ptr<IShader>* shader) override;
             virtual bool CreateTexture(TextureType type, std::shared_ptr<ITexture>* texture) override;
             virtual bool CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) override;
             virtual bool CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) override;
@@ -64,6 +68,8 @@ namespace Ivy {
             NativeDisplay m_NativeDisplay;
             int m_RendererVersionMajor;
             int m_RendererVersionMinor;
+            unsigned int m_BackBufferWidth;
+            unsigned int m_BackBufferHeight;
 
             RendererPath m_Path;
             int m_ColorBits;
