@@ -81,8 +81,8 @@ std::string Ivy::Graphics::GLShader::GetVariableName(VariableType variableType, 
     return std::string(buffer.data());
 }
 
-int Ivy::Graphics::GLShader::GetVariableLocation(VariableType variableType, std::string variableName) {
-    return glGetProgramResourceLocation(m_ProgramID, GetInterfaceEnum(variableType), variableName.c_str());
+int Ivy::Graphics::GLShader::GetVariableLocation(VariableType type, std::string name) {
+    return glGetProgramResourceLocation(m_ProgramID, GetInterfaceEnum(type), name.c_str());
 }
 
 void Ivy::Graphics::GLShader::Release() {
@@ -103,7 +103,8 @@ GLenum Ivy::Graphics::GLShader::GetShaderEnum(ShaderType type, bool useStage) {
 
 GLenum Ivy::Graphics::GLShader::GetInterfaceEnum(VariableType type) {
     switch (type) {
-    case VariableType::Attribute:  return GL_PROGRAM_INPUT;
+    case VariableType::Input:  return GL_PROGRAM_INPUT;
+    case VariableType::Output: return GL_PROGRAM_OUTPUT;
     case VariableType::Block: return GL_UNIFORM_BLOCK;
     case VariableType::Uniform: return GL_UNIFORM;
     default: return GL_NONE;

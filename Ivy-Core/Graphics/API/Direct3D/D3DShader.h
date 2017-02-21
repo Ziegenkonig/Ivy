@@ -26,7 +26,8 @@ namespace Ivy {
 
         private:
 
-            ComPtr<IUnknown> GetShaderFromType(ShaderType type);
+            bool CreateInputLayout();
+            std::string GetCompilerTarget(ShaderType type);
 
             D3DRenderer* m_pRenderer;
             ShaderType m_ShaderType;

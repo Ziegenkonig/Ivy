@@ -78,6 +78,14 @@ int Ivy::Graphics::WGLRenderer::GetStencilBits()
     return m_StencilBits;
 }
 
+bool Ivy::Graphics::WGLRenderer::MultisamplingEnabled() {
+    return m_MultisamplingEnabled;
+}
+
+bool Ivy::Graphics::WGLRenderer::DebuggingEnabled() {
+    return m_DebugEnabled;
+}
+
 RendererAPI Ivy::Graphics::WGLRenderer::GetRendererAPI(void) {
     return RendererAPI::OpenGL;
 }

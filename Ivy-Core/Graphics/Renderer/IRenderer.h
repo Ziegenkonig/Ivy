@@ -26,6 +26,8 @@ namespace Ivy {
             virtual int GetColorBits() = 0;
             virtual int GetDepthBits() = 0;
             virtual int GetStencilBits() = 0;
+            virtual bool MultisamplingEnabled() = 0;
+            virtual bool DebuggingEnabled() = 0;
             virtual RendererAPI GetRendererAPI(void) = 0;
             virtual RendererPath GetRendererPath(void) = 0;
             virtual int GetVersionMajor(void) = 0;

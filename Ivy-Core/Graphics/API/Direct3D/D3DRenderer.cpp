@@ -74,6 +74,14 @@ int Ivy::Graphics::D3DRenderer::GetStencilBits()
     return m_StencilBits;
 }
 
+bool Ivy::Graphics::D3DRenderer::MultisamplingEnabled() {
+    return m_MultisamplingEnabled;
+}
+
+bool Ivy::Graphics::D3DRenderer::DebuggingEnabled() {
+    return m_DebugEnabled;
+}
+
 RendererAPI Ivy::Graphics::D3DRenderer::GetRendererAPI(void)
 {
     return RendererAPI::Direct3D;
@@ -150,6 +158,8 @@ bool Ivy::Graphics::D3DRenderer::Startup(void) {
             case D3D_FEATURE_LEVEL_10_1: m_RendererVersionMajor = 10; m_RendererVersionMinor = 1; break;
             case D3D_FEATURE_LEVEL_10_0: m_RendererVersionMajor = 10; m_RendererVersionMinor = 0; break;
             case D3D_FEATURE_LEVEL_9_3: m_RendererVersionMajor = 9; m_RendererVersionMinor = 3; break;
+            case D3D_FEATURE_LEVEL_9_2: m_RendererVersionMajor = 9; m_RendererVersionMinor = 2; break;
+            case D3D_FEATURE_LEVEL_9_1: m_RendererVersionMajor = 9; m_RendererVersionMinor = 1; break;
             }
             break;
         }
@@ -204,4 +214,8 @@ ComPtr<IDXGISwapChain>& Ivy::Graphics::D3DRenderer::GetIDXGISwapChain() {
 
 ComPtr<ID3D11RenderTargetView>& Ivy::Graphics::D3DRenderer::GetID3D11RenderTargetView() {
     return m_pRenderTargetView;
+}
+
+D3D_FEATURE_LEVEL Ivy::Graphics::D3DRenderer::GetFeatureLevel() {
+    return m_FeatureLevel;
 }

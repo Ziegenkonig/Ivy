@@ -30,6 +30,8 @@ namespace Ivy {
             virtual int GetColorBits(void) override;
             virtual int GetDepthBits(void) override;
             virtual int GetStencilBits(void) override;
+            virtual bool MultisamplingEnabled() override;
+            virtual bool DebuggingEnabled() override;
             virtual bool Initialized(void) override;
             virtual void Present(void) override;
             virtual bool Startup(void) override;

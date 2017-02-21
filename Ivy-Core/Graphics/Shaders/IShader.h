@@ -5,7 +5,8 @@
 namespace Ivy {
     namespace Graphics {
         enum class VariableType {
-            Attribute,
+            Input,
+            Output,
             Uniform,
             Block
         };

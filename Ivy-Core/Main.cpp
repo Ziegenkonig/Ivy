@@ -30,13 +30,14 @@ int main(int argc, char** argv)
             return false;
         
         std::shared_ptr<IShader> fshader;
-        renderer->CreateShader(ShaderType::Pixel, "fragWithTextures.txt", &fshader);
+        renderer->CreateShader(ShaderType::Pixel, "fragNoTextures.txt", &fshader);
         if (!fshader->Create())
             return false;
 
-        int vlocation = vshader->GetVariableLocation(VariableType::Attribute, "ivy_Position");
-        int flocation = fshader->GetVariableLocation(VariableType::Uniform, "frag_Sampler0");
-     
+        int vlocation = vshader->GetVariableLocation(VariableType::Input, "ivy_Color0");
+        std::string vname = vshader->GetVariableName(VariableType::Input, vlocation);
+        int flocation = fshader->GetVariableLocation(VariableType::Input, "frag_Color0");
+        std::string fname = fshader->GetVariableName(VariableType::Input, flocation);
 /*
 #ifdef IVY_FORCE_OPENGL
         ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");

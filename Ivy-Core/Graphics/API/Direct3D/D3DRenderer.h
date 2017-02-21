@@ -10,8 +10,6 @@
 
 #include "../../Renderer/IRenderer.h"
 
-#define ivy__uuidof(NAME) IID_##NAME
-
 using namespace Microsoft::WRL;
 
 namespace Ivy {
@@ -27,6 +25,7 @@ namespace Ivy {
             ComPtr<ID3D11DeviceContext>& GetID3D11DeviceContext(void);
             ComPtr<IDXGISwapChain>& GetIDXGISwapChain(void);
             ComPtr<ID3D11RenderTargetView>& GetID3D11RenderTargetView(void);
+            D3D_FEATURE_LEVEL GetFeatureLevel();
 
         protected:
 
@@ -47,6 +46,8 @@ namespace Ivy {
             virtual int GetColorBits(void) override;
             virtual int GetDepthBits(void) override;
             virtual int GetStencilBits(void) override;
+            virtual bool MultisamplingEnabled() override;
+            virtual bool DebuggingEnabled() override;
             virtual bool Initialized(void) override;
             virtual void Present(void) override;
             virtual bool Startup(void) override;
