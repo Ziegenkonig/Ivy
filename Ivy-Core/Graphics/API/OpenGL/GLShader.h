@@ -5,6 +5,7 @@
 #include "../../../IO/File.h"
 #include "GLRenderer.h"
 #include "../../Shaders/IShader.h"
+#include "../../Shaders/Reflection.h"
 
 namespace Ivy {
     namespace Graphics {
@@ -29,14 +30,14 @@ namespace Ivy {
             virtual std::string GetShaderPath() override;
             virtual std::string GetShaderSource() override;
             virtual ShaderType GetShaderType() override;
-            virtual std::string GetVariableName(VariableType variableType, int index) override;
-            virtual int GetVariableLocation(VariableType variableType, std::string variableName) override;
+            virtual ReflectionData Reflect() override;
             virtual void Release() override;
 
         private:
             
             GLenum GetShaderEnum(ShaderType type, bool useStage);
-            GLenum GetInterfaceEnum(VariableType type);
+            GLenum GetInterfaceEnum(VariableClassifier type);
+            VariableType GLenumToVariableType(GLenum param);
 
             ShaderType m_ShaderType;
             GLuint m_PipelineID;

@@ -34,10 +34,8 @@ int main(int argc, char** argv)
         if (!fshader->Create())
             return false;
 
-        int vlocation = vshader->GetVariableLocation(VariableType::Input, "ivy_Color0");
-        std::string vname = vshader->GetVariableName(VariableType::Input, vlocation);
-        int flocation = fshader->GetVariableLocation(VariableType::Input, "frag_Color0");
-        std::string fname = fshader->GetVariableName(VariableType::Input, flocation);
+        ReflectionData vReflectData = vshader->Reflect();
+        ReflectionData fReflectData = fshader->Reflect();
 /*
 #ifdef IVY_FORCE_OPENGL
         ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");

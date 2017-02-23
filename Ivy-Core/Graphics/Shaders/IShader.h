@@ -2,13 +2,14 @@
 
 #include <string>
 
+#include "Reflection.h"
+
 namespace Ivy {
     namespace Graphics {
-        enum class VariableType {
-            Input,
-            Output,
+        enum class VariableClassifier {
+            Attribute,
             Uniform,
-            Block
+            UniformBlock
         };
 
         enum class ShaderType {
@@ -35,8 +36,7 @@ namespace Ivy {
             virtual std::string GetShaderPath() = 0;
             virtual std::string GetShaderSource() = 0;
             virtual ShaderType GetShaderType() = 0;
-            virtual std::string GetVariableName(VariableType variableType, int index) = 0;
-            virtual int GetVariableLocation(VariableType variableType, std::string variableName) = 0;
+            virtual ReflectionData Reflect() = 0;
             virtual void Release() = 0;
         };
     }

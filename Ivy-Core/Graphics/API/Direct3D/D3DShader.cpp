@@ -72,16 +72,78 @@ Ivy::Graphics::ShaderType Ivy::Graphics::D3DShader::GetShaderType() {
     return m_ShaderType;
 }
 
-std::string Ivy::Graphics::D3DShader::GetVariableName(VariableType variableType, int index) {
-    return std::string();
-}
+Ivy::Graphics::ReflectionData Ivy::Graphics::D3DShader::Reflect() {
+    ReflectionData reflectData;
+    
+    HRESULT error = D3DReflect(m_pShaderBlob->GetBufferPointer(), m_pShaderBlob->GetBufferSize(),
+        IID_ID3D11ShaderReflection, reinterpret_cast<void**>(m_pShaderReflection.GetAddressOf()));
 
-int Ivy::Graphics::D3DShader::GetVariableLocation(VariableType variableType, std::string variableName) {
-    return 0;
+    if (FAILED(error))
+        return reflectData;
+
+    // Get shader info
+    D3D11_SHADER_DESC shaderDesc;
+    m_pShaderReflection->GetDesc(&shaderDesc);
+
+    // Read input layout description from shader info
+    std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayoutDesc;
+    for (unsigned int i = 0; i < shaderDesc.InputParameters; i++)
+    {
+        D3D11_SIGNATURE_PARAMETER_DESC paramDesc;
+        m_pShaderReflection->GetInputParameterDesc(i, &paramDesc);
+
+        // Fill out input element desc
+        D3D11_INPUT_ELEMENT_DESC elementDesc;
+        elementDesc.SemanticName = paramDesc.SemanticName;
+        elementDesc.SemanticIndex = paramDesc.SemanticIndex;
+        elementDesc.InputSlot = 0;
+        elementDesc.AlignedByteOffset = (i == 0) ? 0 : D3D11_APPEND_ALIGNED_ELEMENT;
+        elementDesc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+        elementDesc.InstanceDataStepRate = 0;
+
+        // Determine DXGI format
+        if (paramDesc.Mask == 1) {
+            if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+                elementDesc.Format = DXGI_FORMAT_R32_UINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+                elementDesc.Format = DXGI_FORMAT_R32_SINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+                elementDesc.Format = DXGI_FORMAT_R32_FLOAT;
+        }
+        else if (paramDesc.Mask <= 3) {
+            if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32_UINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32_SINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
+        }
+        else if (paramDesc.Mask <= 7) {
+            if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32B32_UINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32B32_SINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+        }
+        else if (paramDesc.Mask <= 15) {
+            if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_UINT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32B32A32_UINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_SINT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32B32A32_SINT;
+            else if (paramDesc.ComponentType == D3D_REGISTER_COMPONENT_FLOAT32)
+                elementDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+        }
+
+        // Save element desc
+        inputLayoutDesc.push_back(elementDesc);
+    }
+
+    return reflectData;
 }
 
 void Ivy::Graphics::D3DShader::Release() {
-
+       
 }
 
 bool Ivy::Graphics::D3DShader::CreateInputLayout() {
@@ -115,7 +177,7 @@ bool Ivy::Graphics::D3DShader::CreateInputLayout() {
 
 std::string Ivy::Graphics::D3DShader::GetCompilerTarget(ShaderType type) {
     switch (m_pRenderer->GetFeatureLevel()) {
-    case D3D_FEATURE_LEVEL_11_0: {
+    case D3D_FEATURE_LEVEL_11_0:
         switch (type) {
         case ShaderType::Compute: return "cs_5_0";
         case ShaderType::Domain: return "ds_5_0";
@@ -124,7 +186,6 @@ std::string Ivy::Graphics::D3DShader::GetCompilerTarget(ShaderType type) {
         case ShaderType::Pixel: return "ps_5_0";
         default: return "vs_5_0";
         }
-    }
     }
     return "";
 }

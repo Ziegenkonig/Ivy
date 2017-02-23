@@ -62,6 +62,7 @@
     <ClInclude Include="Graphics\API\OpenGL\GLRenderer.h" />
     <ClInclude Include="Graphics\Shaders\IShader.h" />
     <ClInclude Include="Graphics\API\Direct3D\D3DShader.h" />
+    <ClInclude Include="Graphics\Shaders\Reflection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp" />

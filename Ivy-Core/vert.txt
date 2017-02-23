@@ -26,6 +26,16 @@ uniform mat4 ivy_Model;
 uniform mat4 ivy_View;
 uniform mat4 ivy_Projection;
 
+uniform ivy_Light {
+    vec4 color;
+    float intensity;
+    vec3 albedo;
+};
+
+uniform ivy_Diffuse {
+    vec4 light_Pos;
+};
+
 out mediump vec4 frag_Color0;
 out mediump vec4 frag_Color1;
 out mediump vec3 frag_Normal;
@@ -43,6 +53,11 @@ out mediump vec2 frag_TexCoord6;
 out mediump vec2 frag_TexCoord7;
 
 void main() {
+    color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+    light_Pos = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    albedo = vec3(1.0f, 0.0f, 1.0f);
+    intensity = 0.5f;
+
     frag_Color0 = ivy_Color0;
     frag_Color1 = ivy_Color1;
     frag_Normal = ivy_Normal;

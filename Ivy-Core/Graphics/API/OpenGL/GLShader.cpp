@@ -73,16 +73,92 @@ Ivy::Graphics::ShaderType Ivy::Graphics::GLShader::GetShaderType() {
     return m_ShaderType;
 }
 
-std::string Ivy::Graphics::GLShader::GetVariableName(VariableType variableType, int index) {
-    GLint maxNameLength;
-    glGetProgramInterfaceiv(m_ProgramID, GetInterfaceEnum(variableType), GL_MAX_NAME_LENGTH, &maxNameLength);
-    std::vector<char> buffer(maxNameLength);
-    glGetProgramResourceName(m_ProgramID, GetInterfaceEnum(variableType), index, maxNameLength, nullptr, buffer.data());
-    return std::string(buffer.data());
-}
+Ivy::Graphics::ReflectionData Ivy::Graphics::GLShader::Reflect() {
+    ReflectionData reflectData;
 
-int Ivy::Graphics::GLShader::GetVariableLocation(VariableType type, std::string name) {
-    return glGetProgramResourceLocation(m_ProgramID, GetInterfaceEnum(type), name.c_str());
+    // Get the number of each type of resource that is active.
+    GLint activeAttributes;
+    GLint activeUniforms;
+    GLint activeUniformBlocks;
+    glGetProgramInterfaceiv(m_ProgramID, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &activeAttributes);
+    glGetProgramInterfaceiv(m_ProgramID, GL_UNIFORM, GL_ACTIVE_RESOURCES, &activeUniforms);
+    glGetProgramInterfaceiv(m_ProgramID, GL_UNIFORM_BLOCK, GL_ACTIVE_RESOURCES, &activeUniformBlocks);
+    reflectData.mNumAttributes = activeAttributes;
+    reflectData.mNumUniforms = activeUniforms;
+    reflectData.mNumUniformBlocks = activeUniformBlocks;
+
+    for (int i = 0; i < activeAttributes; i++) {
+        // GL_TYPE: returns the type of uniform this is, eg. GL_FLOAT, GL_FLOAT_VEC2.
+        // GL_LOCATION: index where this attribute is located.
+        // GL_NAME_LENGTH: length of the name of this uniform.
+        GLenum attributeProperties[] = { GL_TYPE, GL_LOCATION, GL_NAME_LENGTH };
+        GLint attributeParams[3];
+
+        glGetProgramResourceiv(m_ProgramID, GL_PROGRAM_INPUT, i, 3, attributeProperties, 3, nullptr, attributeParams);
+        std::vector<char> buffer(attributeParams[2]);
+        glGetProgramResourceName(m_ProgramID, GL_PROGRAM_INPUT, i, buffer.size(), nullptr, buffer.data());
+       
+        reflectData.mAttributeLayout.push_back(std::tuple<std::string, VariableType, 
+            VariableIndex>(buffer.data(), GLenumToVariableType(attributeParams[0]), attributeParams[1]));
+    }
+
+    for (int i = 0; i < activeUniforms; i++) {
+        // GL_TYPE: returns the type of uniform this is, eg. GL_FLOAT, GL_FLOAT_VEC2.
+        // GL_LOCATION: index where this uniform is located.
+        // GL_NAME_LENGTH: length of the name of this uniform.
+        GLenum uniformProperties[] = { GL_TYPE, GL_LOCATION, GL_NAME_LENGTH };
+        GLint uniformParams[3];
+        
+        glGetProgramResourceiv(m_ProgramID, GL_UNIFORM, i, 3, uniformProperties, 3, nullptr, uniformParams);
+        std::vector<char> buffer(uniformParams[2]);
+        glGetProgramResourceName(m_ProgramID, GL_UNIFORM, i, buffer.size(), nullptr, buffer.data());
+        
+        reflectData.mUniformLayout.push_back(std::tuple<std::string, VariableType, 
+            VariableIndex>(buffer.data(), GLenumToVariableType(uniformParams[0]), uniformParams[1]));
+    }
+
+    for (int currentUniformBlock = 0; currentUniformBlock < activeUniformBlocks; currentUniformBlock++) {
+        // GL_BUFFER_BINDING: slot for the uniform block to be binded to.
+        // GL_NAME_LENGTH: length of the name of this uniform.
+        // GL_NUM_ACTIVE_VARIABLES: number of active uniforms within the block.
+        GLenum uniformBlockProperties[] = { GL_BUFFER_BINDING, GL_NAME_LENGTH, GL_NUM_ACTIVE_VARIABLES };
+        GLint uniformBlockParams[3];
+        glGetProgramResourceiv(m_ProgramID, GL_UNIFORM_BLOCK, currentUniformBlock, 3, uniformBlockProperties, 3, nullptr, uniformBlockParams);
+        GLint numActiveUniforms = uniformBlockParams[2];
+
+        // GL_ACTIVE_VARIABLES: the indices of the uniform variables within the block.
+        // This will fill up our activeBlockUniforms vector with an array of indices of size GL_NUM_ACTIVE_VARIABLES.
+        GLenum activeBlockUniformsProp[] = { GL_ACTIVE_VARIABLES };
+        std::vector<GLint> activeBlockUniforms(numActiveUniforms);
+        glGetProgramResourceiv(m_ProgramID, GL_UNIFORM_BLOCK, currentUniformBlock, 1, activeBlockUniformsProp, numActiveUniforms, 
+            nullptr, activeBlockUniforms.data());
+
+        // Gets the name of the uniform block.
+        std::vector<char> uniformBlockName(uniformBlockParams[1]);
+        glGetProgramResourceName(m_ProgramID, GL_UNIFORM_BLOCK, currentUniformBlock, uniformBlockName.size(), nullptr, uniformBlockName.data());
+
+        std::vector<std::tuple<std::string, VariableType, VariableIndex>> uniformBlockVariables;
+        for (int currentUniform = 0; currentUniform < numActiveUniforms; currentUniform++) {
+            // GL_TYPE: returns the type of uniform this is, eg. GL_FLOAT, GL_FLOAT_VEC2.
+            // GL_NAME_LENGTH: length of the name of this uniform.
+            GLenum variableProps[] = { GL_TYPE, GL_NAME_LENGTH };
+            GLint variableParams[2];
+
+            // Get the type and name of the uniforms.
+            glGetProgramResourceiv(m_ProgramID, GL_UNIFORM, activeBlockUniforms[currentUniform], 2, variableProps, 2, nullptr, variableParams);
+            std::vector<char> variableName(variableParams[1]);
+            glGetProgramResourceName(m_ProgramID, GL_UNIFORM, activeBlockUniforms[currentUniform], variableName.size(), nullptr, variableName.data());
+            
+            uniformBlockVariables.push_back(std::tuple<std::string, VariableType, VariableIndex>(variableName.data(), 
+                GLenumToVariableType(variableParams[0]), activeBlockUniforms[currentUniform]));
+        }
+
+        reflectData.mUniformBlockLayout.push_back(std::tuple<std::string, VariableIndex, 
+            std::vector<std::tuple<std::string, VariableType, VariableIndex>>>(uniformBlockName.data(), uniformBlockParams[0], 
+                uniformBlockVariables));
+    }
+
+    return reflectData;
 }
 
 void Ivy::Graphics::GLShader::Release() {
@@ -101,12 +177,59 @@ GLenum Ivy::Graphics::GLShader::GetShaderEnum(ShaderType type, bool useStage) {
     }
 }
 
-GLenum Ivy::Graphics::GLShader::GetInterfaceEnum(VariableType type) {
+GLenum Ivy::Graphics::GLShader::GetInterfaceEnum(VariableClassifier type) {
     switch (type) {
-    case VariableType::Input:  return GL_PROGRAM_INPUT;
-    case VariableType::Output: return GL_PROGRAM_OUTPUT;
-    case VariableType::Block: return GL_UNIFORM_BLOCK;
-    case VariableType::Uniform: return GL_UNIFORM;
+    case VariableClassifier::Attribute:  return GL_PROGRAM_INPUT;
+    case VariableClassifier::UniformBlock: return GL_UNIFORM_BLOCK;
+    case VariableClassifier::Uniform: return GL_UNIFORM;
     default: return GL_NONE;
+    }
+}
+
+Ivy::Graphics::VariableType Ivy::Graphics::GLShader::GLenumToVariableType(GLenum param) {
+    switch (param) {
+    case GL_BOOL: return VariableType::Boolean;
+    case GL_BOOL_VEC2: return VariableType::Boolean2;
+    case GL_BOOL_VEC3: return VariableType::Boolean3;
+    case GL_BOOL_VEC4: return VariableType::Boolean4;
+    case GL_DOUBLE: return VariableType::Double;
+    case GL_DOUBLE_VEC2: return VariableType::Double2;
+    case GL_DOUBLE_VEC3: return VariableType::Double3;
+    case GL_DOUBLE_VEC4: return VariableType::Double4;
+    case GL_DOUBLE_MAT2: return VariableType::Double2x2;
+    case GL_DOUBLE_MAT2x3: return VariableType::Double2x3;
+    case GL_DOUBLE_MAT2x4: return VariableType::Double2x4;
+    case GL_DOUBLE_MAT3x2: return VariableType::Double3x2;
+    case GL_DOUBLE_MAT3: return VariableType::Double3x3;
+    case GL_DOUBLE_MAT3x4: return VariableType::Double3x4;
+    case GL_DOUBLE_MAT4x2: return VariableType::Double4x2;
+    case GL_DOUBLE_MAT4x3: return VariableType::Double4x3;
+    case GL_DOUBLE_MAT4: return VariableType::Double4x4;
+    case GL_FLOAT: return VariableType::Float;
+    case GL_FLOAT_VEC2: return VariableType::Float2;
+    case GL_FLOAT_VEC3: return VariableType::Float3;
+    case GL_FLOAT_VEC4: return VariableType::Float4;
+    case GL_FLOAT_MAT2: return VariableType::Float2x2;
+    case GL_FLOAT_MAT2x3: return VariableType::Float2x3;
+    case GL_FLOAT_MAT2x4: return VariableType::Float2x4;
+    case GL_FLOAT_MAT3x2: return VariableType::Float3x2;
+    case GL_FLOAT_MAT3: return VariableType::Float3x3;
+    case GL_FLOAT_MAT3x4: return VariableType::Float3x4;
+    case GL_FLOAT_MAT4x2: return VariableType::Float4x2;
+    case GL_FLOAT_MAT4x3: return VariableType::Float4x3;
+    case GL_FLOAT_MAT4: return VariableType::Float4x4;
+    case GL_INT: return VariableType::Integer;
+    case GL_INT_VEC2: return VariableType::Integer2;
+    case GL_INT_VEC3: return VariableType::Integer3;
+    case GL_INT_VEC4: return VariableType::Integer4;
+    case GL_SAMPLER_1D: return VariableType::Sampler;
+    case GL_SAMPLER_2D: return VariableType::Sampler2D;
+    case GL_SAMPLER_3D: return VariableType::Sampler3D;
+    case GL_SAMPLER_CUBE: return VariableType::SamplerCube;
+    case GL_UNSIGNED_INT: return VariableType::UnsignedInteger;
+    case GL_UNSIGNED_INT_VEC2: return VariableType::UnsignedInteger2;
+    case GL_UNSIGNED_INT_VEC3: return VariableType::UnsignedInteger3;
+    case GL_UNSIGNED_INT_VEC4: return VariableType::UnsignedInteger4;
+    default: return VariableType::Unknown;
     }
 }

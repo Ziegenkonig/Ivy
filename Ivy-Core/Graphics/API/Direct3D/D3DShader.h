@@ -20,8 +20,7 @@ namespace Ivy {
             virtual std::string GetShaderPath() override;
             virtual std::string GetShaderSource() override;
             virtual ShaderType GetShaderType() override;
-            virtual std::string GetVariableName(VariableType variableType, int index) override;
-            virtual int GetVariableLocation(VariableType variableType, std::string variableName) override;
+            virtual ReflectionData Reflect() override;
             virtual void Release() override;
 
         private:
