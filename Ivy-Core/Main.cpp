@@ -30,12 +30,19 @@ int main(int argc, char** argv)
             return false;
         
         std::shared_ptr<IShader> fshader;
-        renderer->CreateShader(ShaderType::Pixel, "fragNoTextures.txt", &fshader);
+        renderer->CreateShader(ShaderType::Pixel, "fragWithTextures.txt", &fshader);
         if (!fshader->Create())
             return false;
 
         ReflectionData vReflectData = vshader->Reflect();
         ReflectionData fReflectData = fshader->Reflect();
+
+        renderer->PushShaderToPipeline(vshader);
+        renderer->PushShaderToPipeline(fshader);
+
+        renderer->EnableShaders();
+        renderer->DisableShaders();
+
 /*
 #ifdef IVY_FORCE_OPENGL
         ShaderProgram programNoTextures("vert.txt", "fragNoTextures.txt");

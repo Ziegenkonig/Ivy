@@ -25,6 +25,9 @@ namespace Ivy {
             virtual bool CreateVertexBuffer(std::shared_ptr<IDrawableBuffer<Vertex>>* buffer) override;
             virtual bool CreateIndexBuffer(std::shared_ptr<IDrawableBuffer<unsigned short>>* buffer) override;
             virtual bool CreateConstantBuffer(std::shared_ptr<IShader> shader, std::shared_ptr<IConstantBuffer>* buffer) override;
+            virtual void DisableShaders() override;
+            virtual void EnableShaders() override;
+            virtual void PushShaderToPipeline(std::shared_ptr<IShader> shader) override;
             virtual int GetBackBufferWidth(void) override;
             virtual int GetBackBufferHeight(void) override;
             virtual int GetColorBits(void) override;
@@ -38,6 +41,9 @@ namespace Ivy {
             virtual void Shutdown(void) override;
 
         private:
+
+            GLuint m_PipelineID;
+            std::shared_ptr<IShader> stages[6];
 
             NativeContext m_NativeContext;
             NativeWindow m_NativeWindow;

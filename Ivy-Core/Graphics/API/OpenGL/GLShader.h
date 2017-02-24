@@ -18,7 +18,7 @@ namespace Ivy {
             GLShader(ShaderType type, std::string path);
             ~GLShader();
 
-            GLuint GetPipelineID();
+            void BindToPipeline(GLint pipelineID);
             GLuint GetProgramID();
 
         protected:

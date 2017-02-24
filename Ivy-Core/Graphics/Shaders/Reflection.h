@@ -5,7 +5,6 @@
 
 namespace Ivy {
     namespace Graphics {
-
         typedef int VariableIndex;
         typedef int VariableArrayLength;
         enum class VariableType {

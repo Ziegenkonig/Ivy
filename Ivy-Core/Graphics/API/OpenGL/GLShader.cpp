@@ -9,8 +9,9 @@ Ivy::Graphics::GLShader::~GLShader() {
     GLShader::Release();
 }
 
-GLuint Ivy::Graphics::GLShader::GetPipelineID() {
-    return m_PipelineID;
+void Ivy::Graphics::GLShader::BindToPipeline(GLint pipelineID) {
+    m_PipelineID = pipelineID;
+    glUseProgramStages(m_PipelineID, GetShaderEnum(m_ShaderType, true), m_ProgramID);
 }
 
 GLuint Ivy::Graphics::GLShader::GetProgramID() {
@@ -18,7 +19,6 @@ GLuint Ivy::Graphics::GLShader::GetProgramID() {
 }
 
 void Ivy::Graphics::GLShader::Activate() {
-    glBindProgramPipeline(m_PipelineID);
     glActiveShaderProgram(m_PipelineID, m_ProgramID);
 }
 
@@ -52,13 +52,11 @@ bool Ivy::Graphics::GLShader::Create() {
         return false;
     }
 
-    glGenProgramPipelines(1, &m_PipelineID);
-    glUseProgramStages(m_PipelineID, GetShaderEnum(m_ShaderType, true), m_ProgramID);
     return true;
 }
 
 void Ivy::Graphics::GLShader::Deactivate() {
-    glBindProgramPipeline(GL_NONE);
+    //glBindProgramPipeline(GL_NONE);
 }
 
 std::string Ivy::Graphics::GLShader::GetShaderPath() {
@@ -163,7 +161,6 @@ Ivy::Graphics::ReflectionData Ivy::Graphics::GLShader::Reflect() {
 
 void Ivy::Graphics::GLShader::Release() {
     glDeleteProgram(m_ProgramID);
-    glDeleteProgramPipelines(1, &m_PipelineID);
 }
 
 GLenum Ivy::Graphics::GLShader::GetShaderEnum(ShaderType type, bool useStage) {

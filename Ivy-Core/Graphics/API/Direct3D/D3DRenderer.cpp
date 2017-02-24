@@ -49,6 +49,19 @@ bool Ivy::Graphics::D3DRenderer::CreateConstantBuffer(std::shared_ptr<IShader> s
     return false;
 }
 
+void Ivy::Graphics::D3DRenderer::DisableShaders()
+{
+}
+
+void Ivy::Graphics::D3DRenderer::EnableShaders()
+{
+}
+
+void Ivy::Graphics::D3DRenderer::PushShaderToPipeline(std::shared_ptr<IShader> shader) {
+
+}
+
+
 int Ivy::Graphics::D3DRenderer::GetBackBufferWidth()
 {
     return m_BackBufferWidth;

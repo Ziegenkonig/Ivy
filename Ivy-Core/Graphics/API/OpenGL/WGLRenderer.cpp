@@ -20,7 +20,7 @@ Ivy::Graphics::WGLRenderer::WGLRenderer(NativeWindow window, NativeDisplay displ
 }
 
 Ivy::Graphics::WGLRenderer::~WGLRenderer() {
-    WGLRenderer::Startup();
+    WGLRenderer::Shutdown();
 }
 
 void Ivy::Graphics::WGLRenderer::AdjustViewport(int width, int height) {
@@ -51,6 +51,32 @@ bool Ivy::Graphics::WGLRenderer::CreateIndexBuffer(std::shared_ptr<IDrawableBuff
 
 bool Ivy::Graphics::WGLRenderer::CreateConstantBuffer(std::shared_ptr<IShader> shader, std::shared_ptr<IConstantBuffer>* buffer) {
     return (*buffer = std::make_shared<GLConstantBuffer>(static_cast<GLShader*>(shader.get()))) != nullptr;
+}
+
+void Ivy::Graphics::WGLRenderer::DisableShaders() {
+    glBindProgramPipeline(GL_NONE);
+}
+
+void Ivy::Graphics::WGLRenderer::EnableShaders() {
+    glBindProgramPipeline(m_PipelineID);
+    for each (std::shared_ptr<IShader> shader in stages) {
+        if(shader)
+            shader->Activate();
+    }
+}
+
+void Ivy::Graphics::WGLRenderer::PushShaderToPipeline(std::shared_ptr<IShader> shader) {
+    static_cast<GLShader*>(shader.get())->BindToPipeline(m_PipelineID);
+    
+    // Shader location is based on shader stage.
+    switch (shader->GetShaderType()) {
+    case ShaderType::Compute: stages[0] = shader; break;
+    case ShaderType::Domain: stages[1] = shader; break;
+    case ShaderType::Geometry: stages[2] = shader; break;
+    case ShaderType::Hull: stages[3] = shader; break;
+    case ShaderType::Pixel: stages[4] = shader; break;
+    default: stages[5] = shader;
+    }
 }
 
 int Ivy::Graphics::WGLRenderer::GetBackBufferWidth()
@@ -225,10 +251,13 @@ bool Ivy::Graphics::WGLRenderer::Startup(void) {
     std::cout << "Resolution: " << viewportInfo[2] << "x" << viewportInfo[3] << std::endl;
 
     std::cout << "WGLRenderer::Startup | SUCCESS" << std::endl;
+    
+    glGenProgramPipelines(1, &m_PipelineID);
     return true;
 }
 
 void Ivy::Graphics::WGLRenderer::Shutdown(void) {
+    glDeleteProgramPipelines(1, &m_PipelineID);
     wglMakeCurrent(m_NativeDisplay, nullptr);
     wglDeleteContext(m_NativeContext);
     ReleaseDC(m_NativeWindow, m_NativeDisplay);
